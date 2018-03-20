@@ -5,10 +5,10 @@ import game2048.Direction;
 /*
 base matrix for game 2048
 παρεχει 2 μεθοδους για υλοποιηση για την κινηση σε καθε orientation (hor|ver)
-*/
+ */
 public abstract class Matrix2048_hv extends Matrix2048_base {
-    
-    public static Matrix2048_base getHV(int rows , int cols ){
+
+    public static Matrix2048_base getHV(int rows, int cols) {
         return new Matrix2048_dry(rows, cols);
     }
 
@@ -16,7 +16,7 @@ public abstract class Matrix2048_hv extends Matrix2048_base {
         super(rows, cols);
     }
 
-     @Override
+    @Override
     public boolean up() {
         return this.upDown(Direction.up.getValue());
     }
@@ -38,6 +38,7 @@ public abstract class Matrix2048_hv extends Matrix2048_base {
 
     /**
      * καθετη κινηση σε μια στηλη
+     *
      * @param ud 1, -1 (πανω ή κατω)
      * @return true αν εγινε κινηση
      */
@@ -52,6 +53,7 @@ public abstract class Matrix2048_hv extends Matrix2048_base {
 
     /**
      * οριζοντια κινηση σε μια σειρα
+     *
      * @param lr 1, -1 (αριστερα ή δεξια)
      * @return true αν εγινε κινηση
      */
@@ -66,6 +68,7 @@ public abstract class Matrix2048_hv extends Matrix2048_base {
 
     /**
      * καθετη κινηση σε μια στηλη
+     *
      * @param ud 1, -1 (πανω ή κατω)
      * @param col το 0 based column
      * @return true αν εγινε κινηση
@@ -74,14 +77,13 @@ public abstract class Matrix2048_hv extends Matrix2048_base {
 
     /**
      * οριζοντια κινηση σε μια σειρα
+     *
      * @param lr 1, -1 (αριστερα ή δεξια)
      * @param row το 0 based row
      * @return true αν εγινε κινηση
      */
     public abstract boolean leftRightRow(int lr, int row);
 }
-
-
 
 /*
 base matrix for game 2048 that pushes rows and columns in 3 stpes
@@ -124,8 +126,8 @@ class Matrix2048_dry extends Matrix2048_hv {
      */
     public boolean mergePairsToH(int lr, int row) {
         boolean result = false;
-        int start = (cols - 1) * (1 - lr) / 2;
-        int bound = (cols - 1) * (1 + lr) / 2;
+        final int start = (cols - 1) * (1 - lr) / 2;
+        final int bound = (cols - 1) * (1 + lr) / 2;
         for (int j = start; (bound - lr * j > 0) && (array[row][j] != 0); j += lr) {
             if (array[row][j] == array[row][j + lr]) {
                 result = true;
@@ -143,10 +145,10 @@ class Matrix2048_dry extends Matrix2048_hv {
      */
     public boolean nonZerosToH(int lr, int row) {
         boolean result = false;
-        int firstIndex = (cols - 1) * (1 - lr) / 2;
-        int bound = cols - firstIndex;
-        int srcIndex = firstIndex;
-        int destIndex = firstIndex;
+        final int start = (cols - 1) * (1 - lr) / 2;
+        final int bound = cols - start;
+        int srcIndex = start;
+        int destIndex = start;
 
         do {
             while (bound - lr * srcIndex > 0 && array[row][srcIndex] != 0) {
@@ -171,8 +173,8 @@ class Matrix2048_dry extends Matrix2048_hv {
      */
     public boolean mergePairsToV(int ud, int col) {
         boolean result = false;
-        int start = (rows - 1) * (1 - ud) / 2;
-        int bound = (rows - 1) * (1 + ud) / 2;
+        final int start = (rows - 1) * (1 - ud) / 2;
+        final int bound = (rows - 1) * (1 + ud) / 2;
         for (int i = start; (bound - ud * i > 0) && (array[i][col] != 0); i += ud) {
             if (array[i][col] == array[i + ud][col]) {
                 result = true;
@@ -190,10 +192,10 @@ class Matrix2048_dry extends Matrix2048_hv {
      */
     public boolean nonZerosToV(int ud, int col) {
         boolean result = false;
-        int firstIndex = (rows - 1) * (1 - ud) / 2;
-        int bound = rows - firstIndex;
-        int srcIndex = firstIndex;
-        int destIndex = firstIndex;
+        final int start = (rows - 1) * (1 - ud) / 2;
+        final int bound = rows - start;
+        int srcIndex = start;
+        int destIndex = start;
 
         do {
             while (bound - ud * srcIndex > 0 && array[srcIndex][col] != 0) {

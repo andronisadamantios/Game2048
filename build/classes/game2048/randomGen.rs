@@ -1,2 +1,0 @@
-game2048.randomGen
-game2048.randomGen1

@@ -1,11 +1,15 @@
-
 package game2048;
 
 public class utils {
 
     public static int getRGB2(int powerOf2) {
-        return getRGB((int)math.utilsMath.log_x(powerOf2, 2));
+        return getRGB((int) log2(powerOf2));
     }
+
+    public static double log2(int powerOf2) {
+        return Math.log(powerOf2) / Math.log(2);
+    }
+
     public static int getRGB(int ektheths) {
         // map [1,16] -> [0,766]
         int a = (ektheths - 1) * (766 / 15);

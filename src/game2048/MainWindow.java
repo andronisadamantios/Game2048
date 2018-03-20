@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-import math.utilsMath;
+
 
 public class MainWindow extends javax.swing.JFrame {
 
@@ -76,7 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
                 int value = this.g.getValue(i, j);
                 Color color = EMPTY;
                 if (value != 0) {
-                    double power = utilsMath.log_x(value, 2);
+                    double power = utils.log2(value);
                     assert power == Math.floor(power);
                     color = getColorFor((int) power);
                 }
