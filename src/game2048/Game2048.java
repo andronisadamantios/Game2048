@@ -1,7 +1,7 @@
 package game2048;
 
 import game2048.matrix.Matrix;
-import game2048.matrix.Matrix2048_3in1;
+import game2048.matrix.Matrix2048;
 import game2048.matrix.Matrix2048_base;
 import game2048.matrix.Matrix2048_hv;
 import java.util.List;
@@ -117,7 +117,7 @@ public class Game2048 {
         this.moves = 0;
         this.result = null;
 //        this.matrix2048 = Matrix2048_hv.getHV(ROWS, COLS);
-        this.matrix2048 = new Matrix2048_3in1(ROWS, COLS);
+        this.matrix2048 = new Matrix2048(ROWS, COLS);
         this.addNewValue();
         this.addNewValue();
     }

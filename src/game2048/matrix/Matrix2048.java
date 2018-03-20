@@ -3,9 +3,9 @@ package game2048.matrix;
 /**
  * η κινηση γινεται με ενα αλγοριθμο
  */
-public class Matrix2048_3in1 extends Matrix2048_hv {
+public class Matrix2048 extends Matrix2048_hv {
 
-    public Matrix2048_3in1(int rows, int cols) {
+    public Matrix2048(int rows, int cols) {
         super(rows, cols);
     }
 
