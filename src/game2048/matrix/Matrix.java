@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Matrix {
-
+    
     public static class Coor {
 
         private final byte row;
@@ -22,8 +22,28 @@ public class Matrix {
         }
 
         public Coor(byte row, byte col) {
-            this.row = row;
-            this.col = col;
+            this.row = (row < 0 ? 0 : row);
+            this.col = (col < 0 ? 0 : col);
+        }
+
+    }
+    
+    public static class Vector {
+
+        private final byte y; // row
+        private final byte x; // col
+
+        public byte getX() {
+            return y;
+        }
+
+        public byte getY() {
+            return x;
+        }
+
+        public Vector(byte row, byte col) {
+            this.y = row;
+            this.x = col;
         }
 
     }
