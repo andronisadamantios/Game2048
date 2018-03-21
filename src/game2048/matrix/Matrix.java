@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Matrix {
-    
+
     public static class Coor {
 
         private final byte row;
@@ -27,26 +27,126 @@ public class Matrix {
         }
 
     }
-    
+
     public static class Vector {
 
-        private final byte y; // row
-        private final byte x; // col
-
-        public byte getX() {
-            return y;
+        public static Vector getFromTo(Coor coorStart, Coor coorEnd) {
+            return new Vector((byte) (coorEnd.row - coorStart.row), (byte) (coorEnd.col - coorStart.col));
         }
 
-        public byte getY() {
-            return x;
+        private final byte dRow; // row
+        private final byte dCol; // col
+
+        public byte getDRow() {
+            return dRow;
+        }
+
+        public byte getDCol() {
+            return dCol;
         }
 
         public Vector(byte row, byte col) {
-            this.y = row;
-            this.x = col;
+            this.dRow = row;
+            this.dCol = col;
         }
 
     }
+
+    public abstract class RowColumnOperator {
+
+        protected final int index;
+
+        public RowColumnOperator(int index) {
+            this.index = index;
+        }
+
+        abstract int get(int index);
+
+        abstract void set(int index, int value);
+
+        class Row extends RowColumnOperator {
+
+            public Row(int index) {
+                super(index);
+            }
+
+            @Override
+            int get(int index) {
+                return Matrix.this.array[this.index][index];
+            }
+
+            @Override
+            void set(int index, int value) {
+                Matrix.this.array[this.index][index] = value;
+            }
+
+        }
+    }
+
+    class RowOperator extends RowColumnOperator {
+
+        public RowOperator(int index) {
+            super(index);
+        }
+
+        @Override
+        int get(int index) {
+            return Matrix.this.array[this.index][index];
+        }
+
+        @Override
+        void set(int index, int value) {
+            Matrix.this.array[this.index][index] = value;
+        }
+
+    }
+
+    class ColumnOperator extends RowColumnOperator {
+
+        public ColumnOperator(int index) {
+            super(index);
+        }
+
+        @Override
+        int get(int index) {
+            return Matrix.this.array[index][this.index];
+        }
+
+        @Override
+        void set(int index, int value) {
+            Matrix.this.array[index][this.index] = value;
+        }
+
+    }
+
+    public final IArrayExtractorSetter rowExtractorSetter = new IArrayExtractorSetter() {
+        @Override
+        public int[] get(int index) {
+            return Matrix.this.array[index];
+        }
+
+        @Override
+        public void set(int index, int[] newArray) {
+            Matrix.this.array[index] = newArray;
+        }
+    };
+    public final IArrayExtractorSetter colExtractorSetter = new IArrayExtractorSetter() {
+        @Override
+        public int[] get(int index) {
+            int[] newArray = new int[Matrix.this.rows];
+            for (int i = 0; i < Matrix.this.rows; i++) {
+                newArray[i] = Matrix.this.array[i][index];
+            }
+            return newArray;
+        }
+
+        @Override
+        public void set(int index, int[] newArray) {
+            for (int i = 0; i < Matrix.this.rows; i++) {
+                Matrix.this.array[i][index] = newArray[i];
+            }
+        }
+    };
 
     protected final int rows;
     protected final int cols;
@@ -58,6 +158,22 @@ public class Matrix {
 
     public int getCols() {
         return cols;
+    }
+
+    public int[] getRow(int index) {
+        return this.rowExtractorSetter.get(index);
+    }
+
+    public int[] getCol(int index) {
+        return this.colExtractorSetter.get(index);
+    }
+
+    public RowColumnOperator getRowOperator(int index) {
+        return new RowOperator(index);
+    }
+
+    public RowColumnOperator getColOperator(int index) {
+        return new ColumnOperator(index);
     }
 
     public int get(int i, int j) {

@@ -7,51 +7,71 @@ matrix for game 2048 that pushes rows and columns in 3 stpes
 has 8 methods (2 for every direction (up|down|left|right))
 idio me to dry alla might be faster
  */
-public abstract class Matrix2048_udlr extends Matrix2048_base {
+public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 {
 
     public Matrix2048_udlr(int rows, int cols) {
         super(rows, cols);
     }
 
     @Override
-    public boolean up() {
-        boolean b = false;
+    public boolean canMoveUp() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveDown() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveLeft() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveRight() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void moveUp() {
         // gia kathe column
         for (int j = 0; j < this.cols; j++) {
-            b |= this.upCol(j);
+            this.moveUpCol(j);
         }
-        return b;
     }
 
     @Override
-    public boolean down() {
-        boolean b = false;
+    public void moveDown() {
         // gia kathe column
         for (int j = 0; j < this.cols; j++) {
-            b |= this.downCol(j);
+            this.moveDownCol(j);
         }
-        return b;
     }
 
     @Override
-    public boolean left() {
-        boolean b = false;
+    public void moveLeft() {
         // gia kathe row
         for (int i = 0; i < this.rows; i++) {
-            b |= this.leftRow(i);
+            this.moveLeftRow(i);
         }
-        return b;
     }
 
     @Override
-    public boolean right() {
-        boolean b = false;
+    public void moveRight() {
         // gia kathe row
         for (int i = 0; i < this.rows; i++) {
-            b |= this.rightRow(i);
+            this.moveRightRow(i);
         }
-        return b;
     }
+
+    public abstract boolean canMoveUpCol(int col);
+
+    public abstract boolean canMoveDownCol(int col);
+
+    public abstract boolean canMoveLeftRow(int row);
+
+    public abstract boolean canMoveRightRow(int row);
 
     /**
      * πανω κινηση σε μια στηλη
@@ -59,7 +79,7 @@ public abstract class Matrix2048_udlr extends Matrix2048_base {
      * @param col το 0 based column
      * @return true αν εγινε κινηση
      */
-    public abstract boolean upCol(int col);
+    public abstract void moveUpCol(int col);
 
     /**
      * κατω κινηση σε μια στηλη
@@ -67,7 +87,7 @@ public abstract class Matrix2048_udlr extends Matrix2048_base {
      * @param col το 0 based column
      * @return true αν εγινε κινηση
      */
-    public abstract boolean downCol(int col);
+    public abstract void moveDownCol(int col);
 
     /**
      * αριστερη κινηση σε μια σειρα
@@ -75,7 +95,7 @@ public abstract class Matrix2048_udlr extends Matrix2048_base {
      * @param row το 0 based row
      * @return true αν εγινε κινηση
      */
-    public abstract boolean leftRow(int row);
+    public abstract void moveLeftRow(int row);
 
     /**
      * δεξια κινηση σε μια σειρα
@@ -83,6 +103,6 @@ public abstract class Matrix2048_udlr extends Matrix2048_base {
      * @param row το 0 based row
      * @return true αν εγινε κινηση
      */
-    public abstract boolean rightRow(int row);
+    public abstract void moveRightRow(int row);
 
 }

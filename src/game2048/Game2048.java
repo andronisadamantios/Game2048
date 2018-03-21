@@ -1,9 +1,8 @@
 package game2048;
 
+import game2048.matrix.IMatrix2048;
 import game2048.matrix.Matrix;
-import game2048.matrix.Matrix2048;
-import game2048.matrix.Matrix2048_base;
-import game2048.matrix.Matrix2048_hv;
+import game2048.matrix.Matrix2048_1;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -17,13 +16,13 @@ public class Game2048 {
     }
 
     public static final Supplier<Integer> rg = () -> (int) Math.pow(2, Math.random() < 0.9 ? 1 : 2);
-    private Matrix2048_base matrix2048;
+    private IMatrix2048 matrix2048;
     private int score;
     private int moves;
     private Result result;
 
     public int getValue(int i, int j) {
-        return this.matrix2048.get(i, j);
+        return ((Matrix) this.matrix2048).get(i, j);
     }
 
     public int getScore() {
@@ -35,7 +34,7 @@ public class Game2048 {
     }
 
     public int getMax() {
-        return this.matrix2048.findMax();
+        return this.matrix2048.getMaxPowerOf2();
     }
 
     public boolean isFinished() {
@@ -68,16 +67,20 @@ public class Game2048 {
         boolean b = false;
         switch (dir) {
             case up:
-                b = this.matrix2048.up();
+                b = this.matrix2048.canMoveUp();
+                this.matrix2048.moveUp();
                 break;
             case down:
-                b = this.matrix2048.down();
+                b = this.matrix2048.canMoveDown();
+                this.matrix2048.moveDown();
                 break;
             case left:
-                b = this.matrix2048.left();
+                b = this.matrix2048.canMoveLeft();
+                this.matrix2048.moveLeft();
                 break;
             case right:
-                b = this.matrix2048.right();
+                b = this.matrix2048.canMoveRight();
+                this.matrix2048.moveRight();
                 break;
             default:
                 throw new AssertionError();
@@ -87,7 +90,7 @@ public class Game2048 {
             b = b && this.addNewValue();
 
             // calculate result
-            if (this.matrix2048.findMax() == 2048) {
+            if (this.matrix2048.getMaxPowerOf2() == 2048) {
                 this.result = Result.won;
             } else if (this.cannotMove()) {
                 this.result = Result.lost;
@@ -103,10 +106,10 @@ public class Game2048 {
 
     private boolean addNewValue() {
         int newValue = rg.get();
-        List<Matrix.Coor> emptyCoors = this.matrix2048.getEmptyCoors();
+        List<Matrix.Coor> emptyCoors = ((Matrix) this.matrix2048).getEmptyCoors();
         if (!emptyCoors.isEmpty()) {
             Matrix.Coor c = emptyCoors.get((int) (Math.random() * emptyCoors.size()));
-            this.matrix2048.set(c.getRow(), c.getCol(), newValue);
+            ((Matrix) this.matrix2048).set(c.getRow(), c.getCol(), newValue);
             return true;
         }
         return false;
@@ -116,8 +119,7 @@ public class Game2048 {
         this.score = 0;
         this.moves = 0;
         this.result = null;
-//        this.matrix2048 = Matrix2048_hv.getHV(ROWS, COLS);
-        this.matrix2048 = new Matrix2048(ROWS, COLS);
+        this.matrix2048 = new Matrix2048_1(ROWS, COLS);
         this.addNewValue();
         this.addNewValue();
     }

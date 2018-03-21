@@ -4,38 +4,44 @@ package game2048.matrix;
 base matrix for game 2048
 yparxoun 4 kinhseis
  */
-public abstract class Matrix2048_base extends Matrix {
-
-    public Matrix2048_base(int rows, int cols) {
-        super(rows, cols);
-    }
+public interface IMatrix2048 {
 
     /**
      * κινηση πανω
      *
      * @return true αν εγινε κινηση
      */
-    public abstract boolean up();
+    void moveUp();
 
     /**
      * κινηση κατω
      *
      * @return true αν εγινε κινηση
      */
-    public abstract boolean down();
+    void moveDown();
 
     /**
      * κινηση αριστερα
      *
      * @return true αν εγινε κινηση
      */
-    public abstract boolean left();
+    void moveLeft();
 
     /**
      * κινηση δεξια
      *
      * @return true αν εγινε κινηση
      */
-    public abstract boolean right();
+    void moveRight();
+
+    boolean canMoveUp();
+
+    boolean canMoveDown();
+
+    boolean canMoveLeft();
+
+    boolean canMoveRight();
+    
+    int getMaxPowerOf2();
 
 }
