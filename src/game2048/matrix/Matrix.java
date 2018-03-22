@@ -30,6 +30,8 @@ public class Matrix {
 
     public static class Vector {
 
+        public static final Vector ZERO = new Vector((byte) 0, (byte) 0);
+
         public static Vector getFromTo(Coor coorStart, Coor coorEnd) {
             return new Vector((byte) (coorEnd.row - coorStart.row), (byte) (coorEnd.col - coorStart.col));
         }
@@ -45,9 +47,9 @@ public class Matrix {
             return dCol;
         }
 
-        public Vector(byte row, byte col) {
-            this.dRow = row;
-            this.dCol = col;
+        public Vector(byte dRow, byte dCol) {
+            this.dRow = dRow;
+            this.dCol = dCol;
         }
 
     }
@@ -60,27 +62,12 @@ public class Matrix {
             this.index = index;
         }
 
+        abstract int getLength();
+
         abstract int get(int index);
 
         abstract void set(int index, int value);
 
-        class Row extends RowColumnOperator {
-
-            public Row(int index) {
-                super(index);
-            }
-
-            @Override
-            int get(int index) {
-                return Matrix.this.array[this.index][index];
-            }
-
-            @Override
-            void set(int index, int value) {
-                Matrix.this.array[this.index][index] = value;
-            }
-
-        }
     }
 
     class RowOperator extends RowColumnOperator {
@@ -99,6 +86,11 @@ public class Matrix {
             Matrix.this.array[this.index][index] = value;
         }
 
+        @Override
+        int getLength() {
+            return Matrix.this.cols;
+        }
+
     }
 
     class ColumnOperator extends RowColumnOperator {
@@ -115,6 +107,11 @@ public class Matrix {
         @Override
         void set(int index, int value) {
             Matrix.this.array[index][this.index] = value;
+        }
+
+        @Override
+        int getLength() {
+            return Matrix.this.rows;
         }
 
     }
@@ -220,7 +217,7 @@ public class Matrix {
     to kathe row ginetai map sto megisto tou
     kai apo auto to stream me ta megista vrisketai to megisto
      */
-    public int findMax() {
+    public int getMax() {
         return Arrays.stream(this.array).map(Arrays::stream).map(IntStream::boxed)
                 .map(s -> s.max(Comparator.naturalOrder()).get())
                 .max(Comparator.naturalOrder()).get();

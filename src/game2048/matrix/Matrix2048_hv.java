@@ -1,6 +1,7 @@
 package game2048.matrix;
 
 import game2048.Direction;
+import java.util.stream.IntStream;
 
 /*
 base matrix for game 2048
@@ -13,51 +14,35 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
     }
 
     @Override
-    public boolean canMoveUp() {
-        return this.canMoveUpDown(Direction.up.getValue());
+    public boolean canMove(Direction direction) {
+        switch (direction.getOrientation()) {
+            case Vertical:
+                return this.canMoveUpDown(direction.getValue());
+            case Horizontal:
+                return this.canMoveLeftRight(direction.getValue());
+            default:
+                throw new AssertionError();
+        }
     }
 
     @Override
-    public boolean canMoveDown() {
-        return this.canMoveUpDown(Direction.down.getValue());
-    }
-
-    @Override
-    public boolean canMoveLeft() {
-        return this.canMoveLeftRight(Direction.left.getValue());
-    }
-
-    @Override
-    public boolean canMoveRight() {
-        return this.canMoveLeftRight(Direction.right.getValue());
-    }
-
-    @Override
-    public void moveUp() {
-        this.moveUpDown(Direction.up.getValue());
-    }
-
-    @Override
-    public void moveDown() {
-        this.moveUpDown(Direction.down.getValue());
-    }
-
-    @Override
-    public void moveLeft() {
-        this.moveLeftRight(Direction.left.getValue());
-    }
-
-    @Override
-    public void moveRight() {
-        this.moveLeftRight(Direction.right.getValue());
+    public boolean move(Direction direction) {
+        switch (direction.getOrientation()) {
+            case Vertical:
+                return this.moveUpDown(direction.getValue());
+            case Horizontal:
+                return this.moveLeftRight(direction.getValue());
+            default:
+                throw new AssertionError();
+        }
     }
 
     public boolean canMoveUpDown(int ud) {
-        throw new UnsupportedOperationException("todo");
+        return IntStream.range(0, cols).anyMatch(i -> canMoveUpDownCol(ud, i));
     }
 
     public boolean canMoveLeftRight(int lr) {
-        throw new UnsupportedOperationException("todo");
+        return IntStream.range(0, rows).anyMatch(i -> canMoveLeftRightRow(lr, i));
     }
 
     /**
@@ -66,11 +51,10 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
      * @param ud 1, -1 (πανω ή κατω)
      * @return true αν εγινε κινηση
      */
-    public void moveUpDown(int ud) {
+    public boolean moveUpDown(int ud) {
         // gia kathe column
-        for (int j = 0; j < this.cols; j++) {
-            this.moveUpDownCol(ud, j);
-        }
+        return IntStream.range(0, cols).mapToObj(i -> this.moveUpDownCol(ud, i))
+                .reduce(Boolean::logicalOr).get();
     }
 
     /**
@@ -79,11 +63,10 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
      * @param lr 1, -1 (αριστερα ή δεξια)
      * @return true αν εγινε κινηση
      */
-    public void moveLeftRight(int lr) {
+    public boolean moveLeftRight(int lr) {
         // gia kathe row
-        for (int i = 0; i < this.rows; i++) {
-            this.moveLeftRightRow(lr, i);
-        }
+        return IntStream.range(0, rows).mapToObj(i -> this.moveLeftRightRow(lr, i))
+                .reduce(Boolean::logicalOr).get();
     }
 
     public abstract boolean canMoveUpDownCol(int ud, int col);
@@ -97,7 +80,7 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
      * @param col το 0 based column
      * @return true αν εγινε κινηση
      */
-    public abstract void moveUpDownCol(int ud, int col);
+    public abstract boolean moveUpDownCol(int ud, int col);
 
     /**
      * οριζοντια κινηση σε μια σειρα
@@ -106,5 +89,5 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
      * @param row το 0 based row
      * @return true αν εγινε κινηση
      */
-    public abstract void moveLeftRightRow(int lr, int row);
+    public abstract boolean moveLeftRightRow(int lr, int row);
 }

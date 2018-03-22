@@ -1,7 +1,8 @@
 package game2048.matrix;
 
 /**
- * η κινηση γινεται με ενα αλγοριθμο για καθε orientation
+ * this class uses a column/row operator to edit the elements η κινηση γινεται
+ * με ενα αλγοριθμο για ολα τα direction
  */
 public class Matrix2048_1 extends Matrix2048_hv implements IMatrix2048 {
 
@@ -11,72 +12,72 @@ public class Matrix2048_1 extends Matrix2048_hv implements IMatrix2048 {
 
     @Override
     public boolean canMoveUpDownCol(int ud, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.moveUpDownCol(ud, col, false);
     }
 
     @Override
     public boolean canMoveLeftRightRow(int lr, int row) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.moveLeftRightRow(lr, row, false);
     }
 
     @Override
-    public void moveUpDownCol(int ud, int col) {
+    public boolean moveUpDownCol(int ud, int col) {
+        return this.moveUpDownCol(ud, col, true);
+    }
+
+    @Override
+    public boolean moveLeftRightRow(int lr, int row) {
+        return this.moveLeftRightRow(lr, row, true);
+    }
+
+    public boolean moveUpDownCol(int ud, int col, boolean move) {
+        RowColumnOperator colOperator = this.getColOperator(col);
+        return this.moveRowCol(ud, colOperator, move);
+    }
+
+    public boolean moveLeftRightRow(int lr, int row, boolean move) {
+        RowColumnOperator rowOperator = this.getRowOperator(row);
+        return this.moveRowCol(lr, rowOperator, move);
+    }
+
+    private boolean moveRowCol(int p, RowColumnOperator rco, boolean move) {
         boolean result = false;
-        final int start = (this.rows - 1) * (1 - ud) / 2;
-        final int bound = ((this.rows - 1) * ud + this.rows + 1) / 2;
-        int[] newArray = new int[this.rows];
+        final int start = (rco.getLength() - 1) * (1 - p) / 2;
+        final int bound = ((rco.getLength() - 1) * p + rco.getLength() + 1) / 2;
+        int[] newArray = new int[rco.getLength()];
         int destIndex = start;
-        for (int srcIndex = start; bound - ud * srcIndex > 0; srcIndex += ud) {
-            int n = this.array[srcIndex][col];
+
+        for (int srcIndex = start; bound - p * srcIndex > 0; srcIndex += p) {
+            int n = rco.get(srcIndex);
             if (n == 0) {
                 continue;
             }
             if (newArray[destIndex] == n) {
-                newArray[destIndex] <<= 1;
-                destIndex += ud;
+                newArray[destIndex]++;
+                destIndex += p;
                 result = true;
+                if (!move) {
+                    return true;
+                }
             } else {
                 if (newArray[destIndex] != 0) {
-                    destIndex += ud;
+                    destIndex += p;
                 }
                 newArray[destIndex] = n;
-                result = result || srcIndex != destIndex;
-            }
-        }
-        for (int i = 0; i < this.rows; i++) {
-            this.array[i][col] = newArray[i];
-        }
-        //return result;
-    }
-
-    @Override
-    public void moveLeftRightRow(int lr, int row) {
-        boolean result = false;
-        final int start = (this.cols - 1) * (1 - lr) / 2;
-        final int bound = ((this.cols - 1) * lr + this.cols + 1) / 2;
-        int[] newArray = new int[this.cols];
-        int destIndex = start;
-        for (int srcIndex = start; bound - lr * srcIndex > 0; srcIndex += lr) {
-            int n = this.array[row][srcIndex];
-            if (n == 0) {
-                continue;
-            }
-            if (newArray[destIndex] == n) {
-                newArray[destIndex] <<= 1;
-                destIndex += lr;
-                result = true;
-            } else {
-                if (newArray[destIndex] != 0) {
-                    destIndex += lr;
+                if (srcIndex != destIndex) {
+                    result = true;
+                    if (!move) {
+                        return true;
+                    }
                 }
-                newArray[destIndex] = n;
-                result = result || srcIndex != destIndex;
             }
         }
-        for (int i = 0; i < this.cols; i++) {
-            this.array[row][i] = newArray[i];
+        if (move) {
+            for (int i = 0; i < rco.getLength(); i++) {
+                rco.set(i, newArray[i]);
+            }
         }
-        //return result;
+        return result;
     }
 
 }

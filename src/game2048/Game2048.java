@@ -3,7 +3,10 @@ package game2048;
 import game2048.matrix.IMatrix2048;
 import game2048.matrix.Matrix;
 import game2048.matrix.Matrix2048_1;
+import game2048.matrix.Matrix2048_2;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class Game2048 {
@@ -15,14 +18,21 @@ public class Game2048 {
         won, lost
     }
 
-    public static final Supplier<Integer> rg = () -> (int) Math.pow(2, Math.random() < 0.9 ? 1 : 2);
+    public static final Supplier<Integer> rg = () -> (int) (Math.random() < 0.9 ? 1 : 2);
+
     private IMatrix2048 matrix2048;
+    private final Map<Direction, Boolean> mapValidNextDirections = new HashMap<>();
+    private final Map<Direction, Move> mapValidNextMoves = new HashMap<>();
     private int score;
     private int moves;
     private Result result;
 
     public int getValue(int i, int j) {
-        return ((Matrix) this.matrix2048).get(i, j);
+        int value = ((Matrix) this.matrix2048).get(i, j);
+        if (value > 0) {
+            return (int) Math.pow(2, value);
+        }
+        return 0;
     }
 
     public int getScore() {
@@ -34,7 +44,11 @@ public class Game2048 {
     }
 
     public int getMax() {
-        return this.matrix2048.getMaxPowerOf2();
+        return this.matrix2048.getMax();
+    }
+
+    public Result getResult() {
+        return result;
     }
 
     public boolean isFinished() {
@@ -64,44 +78,38 @@ public class Game2048 {
     }
 
     public boolean move(Direction dir) {
-        boolean b = false;
-        switch (dir) {
-            case up:
-                b = this.matrix2048.canMoveUp();
-                this.matrix2048.moveUp();
-                break;
-            case down:
-                b = this.matrix2048.canMoveDown();
-                this.matrix2048.moveDown();
-                break;
-            case left:
-                b = this.matrix2048.canMoveLeft();
-                this.matrix2048.moveLeft();
-                break;
-            case right:
-                b = this.matrix2048.canMoveRight();
-                this.matrix2048.moveRight();
-                break;
-            default:
-                throw new AssertionError();
+        if (this.isFinished() || !this.canMove(dir)) {
+            return false;
         }
+        boolean b = this.matrix2048.move(dir);
         if (b) {
             this.moves++;
-            b = b && this.addNewValue();
-
-            // calculate result
-            if (this.matrix2048.getMaxPowerOf2() == 2048) {
-                this.result = Result.won;
-            } else if (this.cannotMove()) {
-                this.result = Result.lost;
-            }
+            // an den mporei na mpei kainourio value den peirazei
+            // mporei na ginetai merge
+            this.addNewValue();
+            this.calculateResult();
         }
 
         return b;
     }
 
-    private boolean cannotMove() { // todo
-        return false;
+    private void calculateResult() {
+        for (Direction v : Direction.values()) {
+            this.mapValidNextDirections.compute(v, (d, b1) -> this.matrix2048.canMove(d));
+        }
+        if (this.matrix2048.getMax() == 11) {
+            this.result = Result.won;
+        } else if (!this.canMove()) {
+            this.result = Result.lost;
+        }
+    }
+
+    private boolean canMove(Direction direction) {
+        return this.mapValidNextDirections.get(direction);
+    }
+
+    private boolean canMove() {
+        return this.mapValidNextDirections.values().stream().anyMatch(b -> b);
     }
 
     private boolean addNewValue() {
@@ -119,9 +127,17 @@ public class Game2048 {
         this.score = 0;
         this.moves = 0;
         this.result = null;
-        this.matrix2048 = new Matrix2048_1(ROWS, COLS);
+        this.matrix2048 = new Matrix2048_2(ROWS, COLS);
+        for (Direction dir : Direction.values()) {
+            this.mapValidNextDirections.replace(dir, Boolean.FALSE);
+            this.mapValidNextDirections.putIfAbsent(dir, Boolean.FALSE);
+            this.mapValidNextMoves.replace(dir, null);
+            this.mapValidNextMoves.putIfAbsent(dir, null);
+        }
+
         this.addNewValue();
         this.addNewValue();
+        this.calculateResult();
     }
 
 }

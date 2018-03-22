@@ -1,5 +1,11 @@
 package game2048.matrix;
 
+/*
+this class extracts a whole row or column
+calculates its next after a move
+η κινηση γινεται με ενα αλγοριθμο για ολα τα direction
+and replaces it as a whole
+ */
 public class Matrix2048_2 extends Matrix2048_hv {
 
     public Matrix2048_2(int rows, int cols) {
@@ -7,7 +13,30 @@ public class Matrix2048_2 extends Matrix2048_hv {
     }
 
     protected boolean canMoveArray(int[] array, int startFrom) {
-
+        final int start = (array.length - 1) * (1 - startFrom) / 2;
+        final int bound = ((array.length - 1) * startFrom + array.length + 1) / 2;
+        int[] newArray = new int[array.length];
+        int destIndex = start;
+        for (int srcIndex = start; bound - startFrom * srcIndex > 0; srcIndex += startFrom) {
+            int n = array[srcIndex];
+            if (n == 0) {
+                continue;
+            }
+            if (newArray[destIndex] == n) {
+                newArray[destIndex]++;
+                destIndex += startFrom;
+                return true;
+            } else {
+                if (newArray[destIndex] != 0) {
+                    destIndex += startFrom;
+                }
+                newArray[destIndex] = n;
+                if (srcIndex != destIndex) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -18,9 +47,9 @@ public class Matrix2048_2 extends Matrix2048_hv {
      */
     protected int[] calculateArray(int[] array, int startFrom) {
         boolean result = false;
-        final int start = (this.cols - 1) * (1 - startFrom) / 2;
-        final int bound = ((this.cols - 1) * startFrom + this.cols + 1) / 2;
-        int[] newArray = new int[this.cols];
+        final int start = (array.length - 1) * (1 - startFrom) / 2;
+        final int bound = ((array.length - 1) * startFrom + array.length + 1) / 2;
+        int[] newArray = new int[array.length];
         int destIndex = start;
         for (int srcIndex = start; bound - startFrom * srcIndex > 0; srcIndex += startFrom) {
             int n = array[srcIndex];
@@ -28,7 +57,7 @@ public class Matrix2048_2 extends Matrix2048_hv {
                 continue;
             }
             if (newArray[destIndex] == n) {
-                newArray[destIndex] <<= 1;
+                newArray[destIndex]++;
                 destIndex += startFrom;
                 result = true;
             } else {
@@ -39,27 +68,37 @@ public class Matrix2048_2 extends Matrix2048_hv {
                 result = result || srcIndex != destIndex;
             }
         }
-        return newArray;
+        return (result ? newArray : null);
     }
 
     @Override
     public boolean canMoveUpDownCol(int ud, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.canMoveArray(this.colExtractorSetter.get(col), ud);
     }
 
     @Override
     public boolean canMoveLeftRightRow(int lr, int row) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.canMoveArray(this.rowExtractorSetter.get(row), lr);
     }
 
     @Override
-    public void moveUpDownCol(int ud, int col) {
-        this.colExtractorSetter.set(col, this.calculateArray(this.colExtractorSetter.get(col), ud));
+    public boolean moveUpDownCol(int ud, int col) {
+        int[] newArray = this.calculateArray(this.colExtractorSetter.get(col), ud);
+        if (newArray != null) {
+            this.colExtractorSetter.set(col, newArray);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void moveLeftRightRow(int lr, int row) {
-        this.rowExtractorSetter.set(row, this.calculateArray(this.rowExtractorSetter.get(row), lr));
+    public boolean moveLeftRightRow(int lr, int row) {
+        int[] newArray = this.calculateArray(this.rowExtractorSetter.get(row), lr);
+        if (newArray != null) {
+            this.rowExtractorSetter.set(row, newArray);
+            return true;
+        }
+        return false;
     }
 
 }

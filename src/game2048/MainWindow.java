@@ -5,9 +5,9 @@ import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-
 
 public class MainWindow extends javax.swing.JFrame {
 
@@ -30,7 +30,7 @@ public class MainWindow extends javax.swing.JFrame {
         MainWindow.this.update();
     });
 
-    private final Timer t = t2;
+    private final Timer t = t1;
     private static final Color EMPTY = new Color(240, 240, 240);
     private final Map<Integer, Color> m = new HashMap<>();
 
@@ -48,7 +48,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.update();
     }
 
-    private boolean play(Direction dir) {
+    private void play(Direction dir) {
         boolean b = false;
         switch (dir) {
             case left:
@@ -66,8 +66,11 @@ public class MainWindow extends javax.swing.JFrame {
             default:
                 throw new AssertionError();
         }
-        this.update();
-        return b;
+        if (b) {
+            this.update();
+        } else if (this.g.isFinished()) {
+            JOptionPane.showMessageDialog(this, "game over", "game finished" , JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     private void update() {
