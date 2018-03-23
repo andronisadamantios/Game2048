@@ -2,8 +2,8 @@ package game2048;
 
 import game2048.matrix.IMatrix2048;
 import game2048.matrix.Matrix;
-import game2048.matrix.Matrix2048_1;
-import game2048.matrix.Matrix2048_2;
+import game2048.matrix.Matrix2048_hv_1;
+import game2048.matrix.Matrix2048_hv_2;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +127,7 @@ public class Game2048 {
         this.score = 0;
         this.moves = 0;
         this.result = null;
-        this.matrix2048 = new Matrix2048_2(ROWS, COLS);
+        this.matrix2048 = new Matrix2048_hv_2(ROWS, COLS);
         for (Direction dir : Direction.values()) {
             this.mapValidNextDirections.replace(dir, Boolean.FALSE);
             this.mapValidNextDirections.putIfAbsent(dir, Boolean.FALSE);

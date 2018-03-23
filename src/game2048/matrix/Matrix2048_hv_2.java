@@ -6,9 +6,9 @@ calculates its next after a move
 η κινηση γινεται με ενα αλγοριθμο για ολα τα direction
 and replaces it as a whole
  */
-public class Matrix2048_2 extends Matrix2048_hv {
+public class Matrix2048_hv_2 extends Matrix2048_hv {
 
-    public Matrix2048_2(int rows, int cols) {
+    public Matrix2048_hv_2(int rows, int cols) {
         super(rows, cols);
     }
 

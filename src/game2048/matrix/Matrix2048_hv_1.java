@@ -4,9 +4,9 @@ package game2048.matrix;
  * this class uses a column/row operator to edit the elements η κινηση γινεται
  * με ενα αλγοριθμο για ολα τα direction
  */
-public class Matrix2048_1 extends Matrix2048_hv implements IMatrix2048 {
+public class Matrix2048_hv_1 extends Matrix2048_hv implements IMatrix2048 {
 
-    public Matrix2048_1(int rows, int cols) {
+    public Matrix2048_hv_1(int rows, int cols) {
         super(rows, cols);
     }
 

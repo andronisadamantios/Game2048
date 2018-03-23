@@ -6,9 +6,9 @@ base matrix for game 2048 that pushes rows and columns in 3 stpes
 it has 2 algorithms: 1) ta mhden sthn akrh, 2) merge
 it has only 4 methods (2 for every orientation (hor|ver))
  */
-public class Matrix2048_hv_impl extends Matrix2048_hv {
+public class Matrix2048_hv_old extends Matrix2048_hv {
 
-    public Matrix2048_hv_impl(int rows, int cols) {
+    public Matrix2048_hv_old(int rows, int cols) {
         super(rows, cols);
     }
 
