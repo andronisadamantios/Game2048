@@ -13,7 +13,17 @@ public class Matrix2048_hv_impl extends Matrix2048_hv {
     }
 
     @Override
-    public boolean upDownCol(int ud, int col) {
+    public boolean canMoveUpDownCol(int ud, int col) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveLeftRightRow(int lr, int row) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean moveUpDownCol(int ud, int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToV(ud, col);
         b2 |= this.mergePairsToV(ud, col);
@@ -24,7 +34,7 @@ public class Matrix2048_hv_impl extends Matrix2048_hv {
     }
 
     @Override
-    public boolean leftRightRow(int lr, int row) {
+    public boolean moveLeftRightRow(int lr, int row) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToH(lr, row);
         b2 |= this.mergePairsToH(lr, row);

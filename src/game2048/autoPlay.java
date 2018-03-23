@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class ai {
+public class autoPlay {
 
 
     public static void stats(Consumer<Game2048> c, int fores) {

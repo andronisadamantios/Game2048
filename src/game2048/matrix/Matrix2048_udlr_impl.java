@@ -7,7 +7,27 @@ public class Matrix2048_udlr_impl extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean upCol(int col) {
+    public boolean canMoveUpCol(int col) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveDownCol(int col) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveLeftRow(int row) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean canMoveRightRow(int row) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean moveUpCol(int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToUp(col);
         b2 |= this.mergePairsToUp(col);
@@ -18,7 +38,7 @@ public class Matrix2048_udlr_impl extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean downCol(int col) {
+    public boolean moveDownCol(int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToDown(col);
         b2 |= this.mergePairsToDown(col);
@@ -29,7 +49,7 @@ public class Matrix2048_udlr_impl extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean leftRow(int row) {
+    public boolean moveLeftRow(int row) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToLeft(row);
         b2 |= this.mergePairsToLeft(row);
@@ -40,7 +60,7 @@ public class Matrix2048_udlr_impl extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean rightRow(int row) {
+    public boolean moveRightRow(int row) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToRight(row);
         b2 |= this.mergePairsToRight(row);
