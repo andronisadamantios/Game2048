@@ -13,17 +13,17 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     }
 
     @Override
-    public boolean canMoveUpDownCol(int ud, int col) {
+    protected boolean canMoveUpDownCol(int ud, int col) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean canMoveLeftRightRow(int lr, int row) {
+    protected boolean canMoveLeftRightRow(int lr, int row) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean moveUpDownCol(int ud, int col) {
+    protected  boolean moveUpDownCol(int ud, int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToV(ud, col);
         b2 |= this.mergePairsToV(ud, col);
@@ -34,7 +34,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     }
 
     @Override
-    public boolean moveLeftRightRow(int lr, int row) {
+    protected boolean moveLeftRightRow(int lr, int row) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToH(lr, row);
         b2 |= this.mergePairsToH(lr, row);
@@ -49,7 +49,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     otan yparxoun 2 diadoxika idia to aristera kata thn aristerh kinhsh or to deksia kata thn deksia kinhsh diplasiazetai
     kai to allo ginetai 0
      */
-    public boolean mergePairsToH(int lr, int row) {
+    protected  boolean mergePairsToH(int lr, int row) {
         boolean result = false;
         final int start = (cols - 1) * (1 - lr) / 2;
         final int bound = (cols - 1) * (1 + lr) / 2;
@@ -68,7 +68,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     move zeros to akrh for left or right
     when left ta 0 pane right
      */
-    public boolean nonZerosToH(int lr, int row) {
+    protected  boolean nonZerosToH(int lr, int row) {
         boolean result = false;
         final int start = (cols - 1) * (1 - lr) / 2;
         final int bound = cols - start;
@@ -96,7 +96,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     otan yparxoun 2 diadoxika idia to panw kata thn panw kinhsh or to katw kata thn katw kinhsh diplasiazetai
     kai to allo ginetai 0
      */
-    public boolean mergePairsToV(int ud, int col) {
+    protected  boolean mergePairsToV(int ud, int col) {
         boolean result = false;
         final int start = (rows - 1) * (1 - ud) / 2;
         final int bound = (rows - 1) * (1 + ud) / 2;
@@ -115,7 +115,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     move zeros to akrh for up or down
     when up ta 0 pane down
      */
-    public boolean nonZerosToV(int ud, int col) {
+    protected  boolean nonZerosToV(int ud, int col) {
         boolean result = false;
         final int start = (rows - 1) * (1 - ud) / 2;
         final int bound = rows - start;

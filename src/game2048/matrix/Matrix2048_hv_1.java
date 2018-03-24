@@ -11,36 +11,45 @@ public class Matrix2048_hv_1 extends Matrix2048_hv implements IMatrix2048 {
     }
 
     @Override
-    public boolean canMoveUpDownCol(int ud, int col) {
+    protected boolean canMoveUpDownCol(int ud, int col) {
         return this.moveUpDownCol(ud, col, false);
     }
 
     @Override
-    public boolean canMoveLeftRightRow(int lr, int row) {
+    protected boolean canMoveLeftRightRow(int lr, int row) {
         return this.moveLeftRightRow(lr, row, false);
     }
 
     @Override
-    public boolean moveUpDownCol(int ud, int col) {
+    protected boolean moveUpDownCol(int ud, int col) {
         return this.moveUpDownCol(ud, col, true);
     }
 
     @Override
-    public boolean moveLeftRightRow(int lr, int row) {
+    protected boolean moveLeftRightRow(int lr, int row) {
         return this.moveLeftRightRow(lr, row, true);
     }
 
-    public boolean moveUpDownCol(int ud, int col, boolean move) {
+    protected boolean moveUpDownCol(int ud, int col, boolean move) {
         RowColumnOperator colOperator = this.getColOperator(col);
         return this.moveRowCol(ud, colOperator, move);
     }
 
-    public boolean moveLeftRightRow(int lr, int row, boolean move) {
+    protected boolean moveLeftRightRow(int lr, int row, boolean move) {
         RowColumnOperator rowOperator = this.getRowOperator(row);
         return this.moveRowCol(lr, rowOperator, move);
     }
 
-    private boolean moveRowCol(int p, RowColumnOperator rco, boolean move) {
+    /**
+     * moves a row or column
+     * (p = 1) => kinhsh (panw|aristera)
+     * (p = -1) => kinhsh (katw|deksia)
+     * @param p {1, -1} -> {start from start, start from end}
+     * @param rco the row or column operator
+     * @param move if true it operates the row or column (changes its values)
+     * @return a boolean if a move is possible
+     */
+    protected boolean moveRowCol(int p, RowColumnOperator rco, boolean move) {
         boolean result = false;
         final int start = (rco.getLength() - 1) * (1 - p) / 2;
         final int bound = ((rco.getLength() - 1) * p + rco.getLength() + 1) / 2;
@@ -53,12 +62,12 @@ public class Matrix2048_hv_1 extends Matrix2048_hv implements IMatrix2048 {
                 continue;
             }
             if (newArray[destIndex] == n) {
-                newArray[destIndex]++;
-                destIndex += p;
                 result = true;
                 if (!move) {
                     return true;
                 }
+                newArray[destIndex]++;
+                destIndex += p;
             } else {
                 if (newArray[destIndex] != 0) {
                     destIndex += p;

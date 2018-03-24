@@ -1,6 +1,8 @@
 package game2048.matrix;
 
 import game2048.Direction;
+import java.util.Collections;
+import java.util.Map;
 
 /*
 base matrix for game 2048
@@ -66,5 +68,9 @@ public interface IMatrix2048 {
     boolean move(Direction direction);
 
     int getMax();
+    
+    default Map<Matrix.Coor, Matrix.Coor> getLastMove(){
+        return Collections.emptyMap();
+    }
 
 }

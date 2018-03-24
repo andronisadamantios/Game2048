@@ -10,18 +10,18 @@ public class Matrix {
 
     public static class Coor {
 
-        private final byte row;
-        private final byte col;
+        private final int row;
+        private final int col;
 
-        public byte getRow() {
+        public int getRow() {
             return row;
         }
 
-        public byte getCol() {
+        public int getCol() {
             return col;
         }
 
-        public Coor(byte row, byte col) {
+        public Coor(int row, int col) {
             this.row = (row < 0 ? 0 : row);
             this.col = (col < 0 ? 0 : col);
         }
@@ -30,24 +30,31 @@ public class Matrix {
 
     public static class Vector {
 
-        public static final Vector ZERO = new Vector((byte) 0, (byte) 0);
-
-        public static Vector getFromTo(Coor coorStart, Coor coorEnd) {
-            return new Vector((byte) (coorEnd.row - coorStart.row), (byte) (coorEnd.col - coorStart.col));
+        public static Vector get(int drow, int dcol) {
+            if (drow == 0 && dcol == 0) {
+                return Vector.ZERO;
+            }
+            return new Vector(drow, dcol);
         }
 
-        private final byte dRow; // row
-        private final byte dCol; // col
+        public static final Vector ZERO = new Vector((int) 0, (int) 0);
 
-        public byte getDRow() {
+        public static Vector getFromTo(Coor coorStart, Coor coorEnd) {
+            return new Vector((int) (coorEnd.row - coorStart.row), (int) (coorEnd.col - coorStart.col));
+        }
+
+        private final int dRow; // row
+        private final int dCol; // col
+
+        public int getDRow() {
             return dRow;
         }
 
-        public byte getDCol() {
+        public int getDCol() {
             return dCol;
         }
 
-        public Vector(byte dRow, byte dCol) {
+        public Vector(int dRow, int dCol) {
             this.dRow = dRow;
             this.dCol = dCol;
         }
@@ -58,6 +65,15 @@ public class Matrix {
 
         protected final int index;
 
+        /**
+         *
+         * @return the 0 based index of the row or column that this objects
+         * operates
+         */
+        public int getIndex() {
+            return index;
+        }
+
         public RowColumnOperator(int index) {
             this.index = index;
         }
@@ -67,6 +83,8 @@ public class Matrix {
         abstract int get(int index);
 
         abstract void set(int index, int value);
+        
+        abstract Coor getCoor(int index);
 
     }
 
@@ -89,6 +107,11 @@ public class Matrix {
         @Override
         int getLength() {
             return Matrix.this.cols;
+        }
+
+        @Override
+        Coor getCoor(int index) {
+            return new Coor(this.index, index);
         }
 
     }
@@ -114,12 +137,18 @@ public class Matrix {
             return Matrix.this.rows;
         }
 
+        @Override
+        Coor getCoor(int index) {
+            return new Coor(index, this.index);
+        }
+
     }
 
     public final IArrayExtractorSetter rowExtractorSetter = new IArrayExtractorSetter() {
         @Override
         public int[] get(int index) {
-            return Matrix.this.array[index];
+            //return Matrix.this.array[index];
+            return Arrays.copyOf(Matrix.this.array[index], Matrix.this.cols);
         }
 
         @Override
@@ -192,8 +221,8 @@ public class Matrix {
 
     public List<Coor> getEmptyCoors() {
         ArrayList<Coor> list = new ArrayList<>();
-        for (byte i = 0; i < this.rows; i++) {
-            for (byte j = 0; j < this.cols; j++) {
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
                 if (this.array[i][j] == 0) {
                     list.add(new Coor(i, j));
                 }

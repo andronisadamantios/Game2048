@@ -23,17 +23,15 @@ public class Matrix2048_hv_2 extends Matrix2048_hv {
                 continue;
             }
             if (newArray[destIndex] == n) {
-                newArray[destIndex]++;
-                destIndex += startFrom;
                 return true;
             } else {
                 if (newArray[destIndex] != 0) {
                     destIndex += startFrom;
                 }
-                newArray[destIndex] = n;
                 if (srcIndex != destIndex) {
                     return true;
                 }
+                newArray[destIndex] = n;
             }
         }
         return false;
@@ -58,10 +56,12 @@ public class Matrix2048_hv_2 extends Matrix2048_hv {
             }
             if (newArray[destIndex] == n) {
                 newArray[destIndex]++;
+                // add move
                 destIndex += startFrom;
                 result = true;
             } else {
                 if (newArray[destIndex] != 0) {
+                    // add move
                     destIndex += startFrom;
                 }
                 newArray[destIndex] = n;
@@ -72,17 +72,17 @@ public class Matrix2048_hv_2 extends Matrix2048_hv {
     }
 
     @Override
-    public boolean canMoveUpDownCol(int ud, int col) {
+    protected boolean canMoveUpDownCol(int ud, int col) {
         return this.canMoveArray(this.colExtractorSetter.get(col), ud);
     }
 
     @Override
-    public boolean canMoveLeftRightRow(int lr, int row) {
+    protected boolean canMoveLeftRightRow(int lr, int row) {
         return this.canMoveArray(this.rowExtractorSetter.get(row), lr);
     }
 
     @Override
-    public boolean moveUpDownCol(int ud, int col) {
+    protected boolean moveUpDownCol(int ud, int col) {
         int[] newArray = this.calculateArray(this.colExtractorSetter.get(col), ud);
         if (newArray != null) {
             this.colExtractorSetter.set(col, newArray);
@@ -92,7 +92,7 @@ public class Matrix2048_hv_2 extends Matrix2048_hv {
     }
 
     @Override
-    public boolean moveLeftRightRow(int lr, int row) {
+    protected boolean moveLeftRightRow(int lr, int row) {
         int[] newArray = this.calculateArray(this.rowExtractorSetter.get(row), lr);
         if (newArray != null) {
             this.rowExtractorSetter.set(row, newArray);

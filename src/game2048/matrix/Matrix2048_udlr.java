@@ -52,13 +52,13 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
         }
     }
 
-    public abstract boolean canMoveUpCol(int col);
+    protected abstract boolean canMoveUpCol(int col);
 
-    public abstract boolean canMoveDownCol(int col);
+    protected abstract boolean canMoveDownCol(int col);
 
-    public abstract boolean canMoveLeftRow(int row);
+    protected abstract boolean canMoveLeftRow(int row);
 
-    public abstract boolean canMoveRightRow(int row);
+    protected abstract boolean canMoveRightRow(int row);
 
     /**
      * πανω κινηση σε μια στηλη
@@ -66,7 +66,7 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
      * @param col το 0 based column
      * @return true αν εγινε κινηση
      */
-    public abstract boolean moveUpCol(int col);
+    protected abstract boolean moveUpCol(int col);
 
     /**
      * κατω κινηση σε μια στηλη
@@ -74,7 +74,7 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
      * @param col το 0 based column
      * @return true αν εγινε κινηση
      */
-    public abstract boolean moveDownCol(int col);
+    protected abstract boolean moveDownCol(int col);
 
     /**
      * αριστερη κινηση σε μια σειρα
@@ -82,7 +82,7 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
      * @param row το 0 based row
      * @return true αν εγινε κινηση
      */
-    public abstract boolean moveLeftRow(int row);
+    protected abstract boolean moveLeftRow(int row);
 
     /**
      * δεξια κινηση σε μια σειρα
@@ -90,6 +90,6 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
      * @param row το 0 based row
      * @return true αν εγινε κινηση
      */
-    public abstract boolean moveRightRow(int row);
+    protected abstract boolean moveRightRow(int row);
 
 }

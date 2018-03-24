@@ -2,7 +2,7 @@ package game2048.matrix;
 
 /*
 auto einai san to Matrix2048_hv_old alla exei 8 mathodous (2 gia kathe directions)
-*/
+ */
 public class Matrix2048_udlr_old extends Matrix2048_udlr {
 
     public Matrix2048_udlr_old(int rows, int cols) {
@@ -10,27 +10,27 @@ public class Matrix2048_udlr_old extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean canMoveUpCol(int col) {
+    protected boolean canMoveUpCol(int col) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean canMoveDownCol(int col) {
+    protected boolean canMoveDownCol(int col) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean canMoveLeftRow(int row) {
+    protected boolean canMoveLeftRow(int row) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean canMoveRightRow(int row) {
+    protected boolean canMoveRightRow(int row) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean moveUpCol(int col) {
+    protected boolean moveUpCol(int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToUp(col);
         b2 |= this.mergePairsToUp(col);
@@ -41,7 +41,7 @@ public class Matrix2048_udlr_old extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean moveDownCol(int col) {
+    protected boolean moveDownCol(int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToDown(col);
         b2 |= this.mergePairsToDown(col);
@@ -52,7 +52,7 @@ public class Matrix2048_udlr_old extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean moveLeftRow(int row) {
+    protected boolean moveLeftRow(int row) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToLeft(row);
         b2 |= this.mergePairsToLeft(row);
@@ -63,7 +63,7 @@ public class Matrix2048_udlr_old extends Matrix2048_udlr {
     }
 
     @Override
-    public boolean moveRightRow(int row) {
+    protected boolean moveRightRow(int row) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToRight(row);
         b2 |= this.mergePairsToRight(row);
