@@ -26,6 +26,13 @@ public class Matrix {
             this.col = (col < 0 ? 0 : col);
         }
 
+        @Override
+        public String toString() {
+            return String.format("(%d, %d)", this.row , this.col);
+        }
+        
+        
+
     }
 
     public static class Vector {
@@ -59,6 +66,12 @@ public class Matrix {
             this.dCol = dCol;
         }
 
+        @Override
+        public String toString() {
+            return String.format("[%d, %d]", this.dRow , this.dCol);
+        }
+        
+
     }
 
     public abstract class RowColumnOperator {
@@ -83,7 +96,7 @@ public class Matrix {
         abstract int get(int index);
 
         abstract void set(int index, int value);
-        
+
         abstract Coor getCoor(int index);
 
     }
@@ -202,6 +215,18 @@ public class Matrix {
         return new ColumnOperator(index);
     }
 
+    /**
+     *
+     * @return a new 2 dimensional array of the current values
+     */
+    public int[][] getArrayDeepCopy() {
+        int[][] newArray = new int[rows][cols];
+        for (int i = 0; i < this.rows; i++) {
+            System.arraycopy(this.array[i], 0, newArray[i], 0, this.cols);
+        }
+        return newArray;
+    }
+
     public int get(int i, int j) {
         return array[i][j];
     }
@@ -230,6 +255,17 @@ public class Matrix {
         }
         return list;
     }
+    public List<Coor> getNonEmptyCoors() {
+        ArrayList<Coor> list = new ArrayList<>();
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                if (this.array[i][j] != 0) {
+                    list.add(new Coor(i, j));
+                }
+            }
+        }
+        return list;
+    }
 
     /*
     ola se ena array kai find max
@@ -246,7 +282,7 @@ public class Matrix {
     to kathe row ginetai map sto megisto tou
     kai apo auto to stream me ta megista vrisketai to megisto
      */
-    public int getMax() {
+    public int findMax() {
         return Arrays.stream(this.array).map(Arrays::stream).map(IntStream::boxed)
                 .map(s -> s.max(Comparator.naturalOrder()).get())
                 .max(Comparator.naturalOrder()).get();

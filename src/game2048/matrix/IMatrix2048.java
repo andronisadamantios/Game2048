@@ -1,8 +1,9 @@
 package game2048.matrix;
 
 import game2048.Direction;
+import game2048.MoveTile;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 
 /*
 base matrix for game 2048
@@ -67,10 +68,28 @@ public interface IMatrix2048 {
 
     boolean move(Direction direction);
 
-    int getMax();
+    byte getMaxExponent();
     
-    default Map<Matrix.Coor, Matrix.Coor> getLastMove(){
-        return Collections.emptyMap();
+    int getMaxValue();
+    
+    byte getExponent(int row , int col);
+    
+    int getValue(int row , int col);
+    
+    /**
+     *
+     * @return a new 2 dimensional array of the current values (powers of 2)
+     */
+    int[][] getAllValues();
+    
+    /**
+     *
+     * @return a new 2 dimensional array of the current exponents (of the powers of 2)
+     */
+    byte[][] getAllExponents();
+    
+    default Collection<MoveTile> getLastMove(){
+        return Collections.EMPTY_LIST;
     }
 
 }

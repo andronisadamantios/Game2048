@@ -1,8 +1,9 @@
 package game2048.matrix;
 
 import game2048.Direction;
-import java.util.HashMap;
-import java.util.Map;
+import game2048.MoveTile;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /*
 this class extracts a whole row or column
@@ -16,10 +17,10 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
         super(rows, cols);
     }
 
-    private final Map<Matrix.Coor, Matrix.Coor> lastMove = new HashMap<>();
+    private final Collection<MoveTile> lastMove = new ArrayList<>();
 
     @Override
-    public Map<Coor, Coor> getLastMove() {
+    public Collection<MoveTile> getLastMove() {
         return this.lastMove;
     }
 
@@ -48,17 +49,20 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
                     return true;
                 }
                 newArray[destIndex]++;
-                this.lastMove.put(rco.getCoor(srcIndex), rco.getCoor(destIndex));
+                if (move) {
+                    this.lastMove.add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex)));
+                }
                 destIndex += p;
             } else {
                 if (newArray[destIndex] != 0) {
-                    this.lastMove.put(rco.getCoor(srcIndex), rco.getCoor(destIndex));
                     destIndex += p;
                 }
                 newArray[destIndex] = n;
                 if (srcIndex != destIndex) {
-                    result = true;
-                    if (!move) {
+                    if (move) {
+                        this.lastMove.add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex)));
+                        result = true;
+                    } else {
                         return true;
                     }
                 }

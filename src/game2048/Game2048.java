@@ -3,7 +3,10 @@ package game2048;
 import game2048.matrix.IMatrix2048;
 import game2048.matrix.Matrix;
 import game2048.matrix.Matrix2048_hv_1;
+import game2048.matrix.Matrix2048_hv_1_move;
 import game2048.matrix.Matrix2048_hv_2;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +25,18 @@ public class Game2048 {
 
     private IMatrix2048 matrix2048;
     private final Map<Direction, Boolean> mapValidNextDirections = new HashMap<>();
-    private final Map<Direction, Move> mapValidNextMoves = new HashMap<>();
+    //private final Map<Direction, Move> mapValidNextMoves = new HashMap<>();
     private int score;
     private int moves;
     private Result result;
+    private final Collection<Matrix.Coor> lastAdded = new ArrayList<>();
 
-    public int getValue(int i, int j) {
-        int value = ((Matrix) this.matrix2048).get(i, j);
-        if (value > 0) {
-            return (int) Math.pow(2, value);
-        }
-        return 0;
+    public Collection<Matrix.Coor> getLastAdded() {
+        return lastAdded;
+    }
+
+    public IMatrix2048 getMatrix() {
+        return this.matrix2048;
     }
 
     public int getScore() {
@@ -44,7 +48,7 @@ public class Game2048 {
     }
 
     public int getMax() {
-        return this.matrix2048.getMax();
+        return this.matrix2048.getMaxExponent();
     }
 
     public Result getResult() {
@@ -81,6 +85,7 @@ public class Game2048 {
         if (this.isFinished() || !this.canMove(dir)) {
             return false;
         }
+        this.lastAdded.clear();
         boolean b = this.matrix2048.move(dir);
         if (b) {
             this.moves++;
@@ -97,27 +102,28 @@ public class Game2048 {
         for (Direction v : Direction.values()) {
             this.mapValidNextDirections.compute(v, (d, b1) -> this.matrix2048.canMove(d));
         }
-        if (this.matrix2048.getMax() == 11) {
+        if (this.matrix2048.getMaxExponent() == 11) {
             this.result = Result.won;
         } else if (!this.canMove()) {
             this.result = Result.lost;
         }
     }
 
-    private boolean canMove(Direction direction) {
+    public boolean canMove(Direction direction) {
         return this.mapValidNextDirections.get(direction);
     }
 
-    private boolean canMove() {
+    public boolean canMove() {
         return this.mapValidNextDirections.values().stream().anyMatch(b -> b);
     }
 
     private boolean addNewValue() {
-        int newValue = rg.get();
         List<Matrix.Coor> emptyCoors = ((Matrix) this.matrix2048).getEmptyCoors();
         if (!emptyCoors.isEmpty()) {
             Matrix.Coor c = emptyCoors.get((int) (Math.random() * emptyCoors.size()));
+            int newValue = rg.get();
             ((Matrix) this.matrix2048).set(c.getRow(), c.getCol(), newValue);
+            this.lastAdded.add(c);
             return true;
         }
         return false;
@@ -127,14 +133,15 @@ public class Game2048 {
         this.score = 0;
         this.moves = 0;
         this.result = null;
-        this.matrix2048 = new Matrix2048_hv_2(ROWS, COLS);
+        this.matrix2048 = new Matrix2048_hv_1_move(ROWS, COLS);
         for (Direction dir : Direction.values()) {
             this.mapValidNextDirections.replace(dir, Boolean.FALSE);
             this.mapValidNextDirections.putIfAbsent(dir, Boolean.FALSE);
-            this.mapValidNextMoves.replace(dir, null);
-            this.mapValidNextMoves.putIfAbsent(dir, null);
+//            this.mapValidNextMoves.replace(dir, null);
+//            this.mapValidNextMoves.putIfAbsent(dir, null);
         }
-
+        this.lastAdded.clear();
+        
         this.addNewValue();
         this.addNewValue();
         this.calculateResult();

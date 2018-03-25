@@ -10,8 +10,49 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
     }
 
     @Override
-    public int getMax() {
-        return super.getMax();
+    public byte[][] getAllExponents() {
+        byte[][] result = new byte[this.rows][this.cols];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                result[i][j] = (byte) this.array[i][j];
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int[][] getAllValues() {
+        int[][] result = new int[this.rows][this.cols];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                result[i][j] = this.getValue(i, j);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public byte getMaxExponent() {
+        return (byte) this.findMax();
+    }
+
+    @Override
+    public int getMaxValue() {
+        return (int) Math.pow(2, this.findMax());
+    }
+
+    @Override
+    public byte getExponent(int row, int col) {
+        return (byte) this.get(row, col);
+    }
+
+    @Override
+    public int getValue(int row, int col) {
+        int exponent = this.get(row, col);
+        if (exponent > 0) {
+            return (int) Math.pow(2, exponent);
+        }
+        return 0;
     }
 
     @Override

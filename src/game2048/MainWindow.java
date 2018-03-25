@@ -1,6 +1,7 @@
 package game2048;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,34 +50,28 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void play(Direction dir) {
-        boolean b = false;
-        switch (dir) {
-            case left:
-                b = this.g.left();
-                break;
-            case up:
-                b = this.g.up();
-                break;
-            case right:
-                b = this.g.right();
-                break;
-            case down:
-                b = this.g.down();
-                break;
-            default:
-                throw new AssertionError();
+        if (this.checkFinished()) {
+            return;
         }
-        if (b) {
+        if (this.g.move(dir)) {
             this.update();
-        } else if (this.g.isFinished()) {
-            JOptionPane.showMessageDialog(this, "game over", "game finished" , JOptionPane.PLAIN_MESSAGE);
+            this.checkFinished();
         }
     }
 
+    private boolean checkFinished() throws HeadlessException {
+        if (this.g.isFinished()) {
+            JOptionPane.showMessageDialog(this, "game over", "game finished", JOptionPane.PLAIN_MESSAGE);
+            return true;
+        }
+        return false;
+    }
+
     private void update() {
+        int[][] allValues = this.g.getMatrix().getAllValues();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                int value = this.g.getValue(i, j);
+                int value = allValues[i][j];
                 Color color = EMPTY;
                 if (value != 0) {
                     double power = utils.log2(value);
