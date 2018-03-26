@@ -2,9 +2,7 @@ package game2048;
 
 import game2048.matrix.IMatrix2048;
 import game2048.matrix.Matrix;
-import game2048.matrix.Matrix2048_hv_1;
 import game2048.matrix.Matrix2048_hv_1_move;
-import game2048.matrix.Matrix2048_hv_2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -59,6 +57,10 @@ public class Game2048 {
         return this.result != null;
     }
 
+    public boolean isGameOver() {
+        return this.result == Result.lost;
+    }
+
     public Game2048() {
         this.reset();
     }
@@ -82,7 +84,7 @@ public class Game2048 {
     }
 
     public boolean move(Direction dir) {
-        if (this.isFinished() || !this.canMove(dir)) {
+        if (this.isGameOver() || !this.canMove(dir)) {
             return false;
         }
         this.lastAdded.clear();
@@ -141,7 +143,7 @@ public class Game2048 {
 //            this.mapValidNextMoves.putIfAbsent(dir, null);
         }
         this.lastAdded.clear();
-        
+
         this.addNewValue();
         this.addNewValue();
         this.calculateResult();

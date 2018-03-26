@@ -61,7 +61,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private boolean checkFinished() throws HeadlessException {
         if (this.g.isFinished()) {
-            JOptionPane.showMessageDialog(this, "game over", "game finished", JOptionPane.PLAIN_MESSAGE);
+            if (this.g.isGameOver()) {
+                JOptionPane.showMessageDialog(this, "game over", "game finished", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "game won", "game won. reached 2048", JOptionPane.PLAIN_MESSAGE);
+            }
             return true;
         }
         return false;
