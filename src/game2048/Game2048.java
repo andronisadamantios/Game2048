@@ -46,7 +46,7 @@ public class Game2048 {
     }
 
     public int getMax() {
-        return this.matrix2048.getMaxExponent();
+        return this.matrix2048.getMaxInternalValue();
     }
 
     public Result getResult() {
@@ -104,7 +104,7 @@ public class Game2048 {
         for (Direction v : Direction.values()) {
             this.mapValidNextDirections.compute(v, (d, b1) -> this.matrix2048.canMove(d));
         }
-        if (this.matrix2048.getMaxExponent() == 11) {
+        if (this.matrix2048.getMaxInternalValue() == 11) {
             this.result = Result.won;
         } else if (!this.canMove()) {
             this.result = Result.lost;

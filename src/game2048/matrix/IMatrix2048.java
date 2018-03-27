@@ -1,9 +1,7 @@
 package game2048.matrix;
 
 import game2048.Direction;
-import game2048.MoveTile;
-import java.util.Collection;
-import java.util.Collections;
+import game2048.MoveBoard;
 
 /*
 base matrix for game 2048
@@ -64,32 +62,34 @@ public interface IMatrix2048 {
     }
 
     boolean canMove();
+
     boolean canMove(Direction direction);
 
     boolean move(Direction direction);
 
-    byte getMaxExponent();
-    
-    int getMaxValue();
-    
-    byte getExponent(int row , int col);
-    
-    int getValue(int row , int col);
-    
+    byte getMaxInternalValue();
+
+    int getMaxRepresentedValue();
+
+    byte getInternalValue(int row, int col);
+
+    int getRepresentedValue(int row, int col);
+
     /**
      *
      * @return a new 2 dimensional array of the current values (powers of 2)
      */
-    int[][] getAllValues();
-    
+    int[][] getAllRepresentedValues();
+
     /**
      *
-     * @return a new 2 dimensional array of the current exponents (of the powers of 2)
+     * @return a new 2 dimensional array of the current exponents (of the powers
+     * of 2)
      */
-    byte[][] getAllExponents();
-    
-    default Collection<MoveTile> getLastMove(){
-        return Collections.EMPTY_LIST;
+    byte[][] getAllInternalValues();
+
+    default MoveBoard getLastMove() {
+        throw new UnsupportedOperationException();
     }
 
 }

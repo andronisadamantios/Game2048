@@ -3,14 +3,22 @@ package game2048.matrix;
 import game2048.Direction;
 import java.util.Arrays;
 
+/*
+internal values are in this case the exponents of 2
+represented values are the power of 2 to the internal value
+ */
 public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
+
+    public static int mapInternalToRepresented(int value) {
+        return (int) Math.pow(2, value);
+    }
 
     public Matrix2048(int rows, int cols) {
         super(rows, cols);
     }
 
     @Override
-    public byte[][] getAllExponents() {
+    public byte[][] getAllInternalValues() {
         byte[][] result = new byte[this.rows][this.cols];
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
@@ -21,36 +29,36 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
     }
 
     @Override
-    public int[][] getAllValues() {
+    public int[][] getAllRepresentedValues() {
         int[][] result = new int[this.rows][this.cols];
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
-                result[i][j] = this.getValue(i, j);
+                result[i][j] = this.getRepresentedValue(i, j);
             }
         }
         return result;
     }
 
     @Override
-    public byte getMaxExponent() {
+    public byte getMaxInternalValue() {
         return (byte) this.findMax();
     }
 
     @Override
-    public int getMaxValue() {
-        return (int) Math.pow(2, this.findMax());
+    public int getMaxRepresentedValue() {
+        return mapInternalToRepresented(this.getMaxInternalValue());
     }
 
     @Override
-    public byte getExponent(int row, int col) {
+    public byte getInternalValue(int row, int col) {
         return (byte) this.get(row, col);
     }
 
     @Override
-    public int getValue(int row, int col) {
-        int exponent = this.get(row, col);
-        if (exponent > 0) {
-            return (int) Math.pow(2, exponent);
+    public int getRepresentedValue(int row, int col) {
+        int internal = this.get(row, col);
+        if (internal > 0) {
+            return mapInternalToRepresented(internal);
         }
         return 0;
     }

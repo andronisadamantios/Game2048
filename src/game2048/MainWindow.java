@@ -72,7 +72,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void update() {
-        int[][] allValues = this.g.getMatrix().getAllValues();
+        int[][] allValues = this.g.getMatrix().getAllRepresentedValues();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 int value = allValues[i][j];
