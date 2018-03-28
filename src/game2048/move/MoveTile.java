@@ -1,12 +1,11 @@
-package game2048;
+package game2048.move;
 
 import game2048.matrix.Matrix;
 
-public class MoveTile {
+public class MoveTile extends Move {
 
     private final Matrix.Coor start;
     private final Matrix.Coor end;
-    private final int newValue;
 
     public Matrix.Coor getStart() {
         return start;
@@ -16,14 +15,10 @@ public class MoveTile {
         return end;
     }
 
-    public int getNewValue() {
-        return newValue;
-    }
-
-    public MoveTile(Matrix.Coor start, Matrix.Coor end, int newValue) {
+    public MoveTile(Matrix.Coor start, Matrix.Coor end, int value) {
+        super(value);
         this.start = start;
         this.end = end;
-        this.newValue = newValue;
     }
 
     public Matrix.Vector getVector() {
@@ -32,7 +27,7 @@ public class MoveTile {
 
     @Override
     public String toString() {
-        return String.format("%s -> %s : %d", this.start, this.end , this.newValue);
+        return String.format("%s -> %s : %s", this.start, this.end, super.toString());
     }
 
 }

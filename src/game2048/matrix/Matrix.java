@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Matrix {
+public class Matrix implements IMatrix {
 
     public static class Coor {
 
@@ -191,10 +191,12 @@ public class Matrix {
     protected final int cols;
     protected final int[][] array;
 
+    @Override
     public int getRows() {
         return rows;
     }
 
+    @Override
     public int getCols() {
         return cols;
     }
@@ -227,10 +229,12 @@ public class Matrix {
         return newArray;
     }
 
+    @Override
     public int get(int i, int j) {
         return array[i][j];
     }
 
+    @Override
     public void set(int i, int j, int value) {
         this.array[i][j] = value;
     }

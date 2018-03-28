@@ -1,13 +1,13 @@
 package game2048.matrix;
 
 import game2048.Direction;
-import game2048.MoveBoard;
+import game2048.move.MoveBoard;
 
 /*
 base matrix for game 2048
 yparxoun 4 kinhseis
  */
-public interface IMatrix2048 {
+public interface IMatrix2048 extends IMatrix {
 
     default boolean canMoveUp() {
         return this.canMove(Direction.up);
