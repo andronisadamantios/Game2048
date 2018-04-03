@@ -30,20 +30,20 @@ public class Matrix2048_hv_1 extends Matrix2048_hv implements IMatrix2048 {
         return this.moveLeftRightRow(lr, row, true);
     }
 
-    protected boolean moveUpDownCol(int ud, int col, boolean move) {
+    private boolean moveUpDownCol(int ud, int col, boolean move) {
         RowColumnOperator colOperator = this.getColOperator(col);
         return this.moveRowCol(ud, colOperator, move);
     }
 
-    protected boolean moveLeftRightRow(int lr, int row, boolean move) {
+    private boolean moveLeftRightRow(int lr, int row, boolean move) {
         RowColumnOperator rowOperator = this.getRowOperator(row);
         return this.moveRowCol(lr, rowOperator, move);
     }
 
     /**
-     * moves a row or column
-     * (p = 1) => kinhsh (panw|aristera)
-     * (p = -1) => kinhsh (katw|deksia)
+     * moves a row or column (p = 1) => kinhsh (panw|aristera) (p = -1) =>
+     * kinhsh (katw|deksia)
+     *
      * @param p {1, -1} -> {start from start, start from end}
      * @param rco the row or column operator
      * @param move if true it operates the row or column (changes its values)

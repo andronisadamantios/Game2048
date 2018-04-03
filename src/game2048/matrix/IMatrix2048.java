@@ -1,6 +1,6 @@
 package game2048.matrix;
 
-import game2048.Direction;
+
 import game2048.move.MoveBoard;
 
 /*
@@ -10,19 +10,19 @@ yparxoun 4 kinhseis
 public interface IMatrix2048 extends IMatrix {
 
     default boolean canMoveUp() {
-        return this.canMove(Direction.up);
+        return this.canMove(Matrix.Vector.UP);
     }
 
     default boolean canMoveDown() {
-        return this.canMove(Direction.down);
+        return this.canMove(Matrix.Vector.DOWN);
     }
 
     default boolean canMoveLeft() {
-        return this.canMove(Direction.left);
+        return this.canMove(Matrix.Vector.LEFT);
     }
 
     default boolean canMoveRight() {
-        return this.canMove(Direction.right);
+        return this.canMove(Matrix.Vector.RIGHT);
     }
 
     /**
@@ -31,7 +31,7 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveUp() {
-        return this.move(Direction.up);
+        return this.move(Matrix.Vector.UP);
     }
 
     /**
@@ -40,7 +40,7 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveDown() {
-        return this.move(Direction.down);
+        return this.move(Matrix.Vector.DOWN);
     }
 
     /**
@@ -49,7 +49,7 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveLeft() {
-        return this.move(Direction.left);
+        return this.move(Matrix.Vector.LEFT);
     }
 
     /**
@@ -58,14 +58,14 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveRight() {
-        return this.move(Direction.right);
+        return this.move(Matrix.Vector.RIGHT);
     }
 
     boolean canMove();
 
-    boolean canMove(Direction direction);
+    boolean canMove(game2048.matrix.Matrix.Vector direction);
 
-    boolean move(Direction direction);
+    boolean move(Matrix.Vector direction);
 
     byte getMaxInternalValue();
 

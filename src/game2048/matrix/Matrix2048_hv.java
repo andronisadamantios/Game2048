@@ -1,6 +1,5 @@
 package game2048.matrix;
 
-import game2048.Direction;
 import java.util.stream.IntStream;
 
 /*
@@ -14,26 +13,28 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
     }
 
     @Override
-    public boolean canMove(Direction direction) {
-        switch (direction.getOrientation()) {
-            case Vertical:
-                return this.canMoveUpDown(direction.getValue());
-            case Horizontal:
-                return this.canMoveLeftRight(direction.getValue());
-            default:
-                throw new AssertionError();
+    public boolean canMove(Matrix.Vector direction) {
+        int value = direction.getDCol() + direction.getDRow();
+        if (direction.isVertical()) {
+            value = -value;
+            return this.canMoveUpDown(value);
+        } else if (direction.isHorizontal()) {
+            return this.canMoveLeftRight(value);
+        } else {
+            throw new AssertionError();
         }
     }
 
     @Override
-    public boolean move(Direction direction) {
-        switch (direction.getOrientation()) {
-            case Vertical:
-                return this.moveUpDown(direction.getValue());
-            case Horizontal:
-                return this.moveLeftRight(direction.getValue());
-            default:
-                throw new AssertionError();
+    public boolean move(Matrix.Vector direction) {
+        int value = direction.getDCol() + direction.getDRow();
+        if (direction.isVertical()) {
+            value = -value;
+            return this.moveUpDown(value);
+        } else if (direction.isHorizontal()) {
+            return this.moveLeftRight(value);
+        } else {
+            throw new AssertionError();
         }
     }
 

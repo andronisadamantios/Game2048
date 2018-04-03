@@ -1,6 +1,6 @@
 package game2048.matrix;
 
-import game2048.Direction;
+
 import game2048.move.MoveBoard;
 import game2048.move.MoveTile;
 
@@ -28,7 +28,7 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
     }
 
     @Override
-    public boolean move(Direction direction) {
+    public boolean move(Matrix.Vector direction) {
         this.mb = new MoveBoard();
         return super.move(direction);
     }

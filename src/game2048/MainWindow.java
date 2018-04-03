@@ -1,5 +1,6 @@
 package game2048;
 
+import game2048.matrix.Matrix;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -49,7 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.update();
     }
 
-    private void play(Direction dir) {
+    private void play(Matrix.Vector dir) {
         if (this.checkFinished()) {
             return;
         }
@@ -440,16 +441,16 @@ public class MainWindow extends javax.swing.JFrame {
     private void KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeyPressed
         switch (evt.getKeyCode()) {
             case LEFT_ARROW:
-                this.play(Direction.left);
+                this.play(Matrix.Vector.LEFT);
                 break;
             case UP_ARROW:
-                this.play(Direction.up);
+                this.play(Matrix.Vector.UP);
                 break;
             case RIGHT_ARROW:
-                this.play(Direction.right);
+                this.play(Matrix.Vector.RIGHT);
                 break;
             case DOWN_ARROW:
-                this.play(Direction.down);
+                this.play(Matrix.Vector.DOWN);
                 break;
             case 65:
             case 97:

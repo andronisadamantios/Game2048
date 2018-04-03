@@ -1,6 +1,5 @@
 package game2048.matrix;
 
-import game2048.Direction;
 import java.util.stream.IntStream;
 
 /*
@@ -17,38 +16,36 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
     }
 
     @Override
-    public boolean canMove(Direction direction) {
-        switch (direction) {
-            case left:
-                return IntStream.range(0, rows).anyMatch(i -> this.canMoveLeftRow(i));
-            case right:
-                return IntStream.range(0, rows).anyMatch(i -> this.canMoveRightRow(i));
-            case up:
-                return IntStream.range(0, cols).anyMatch(i -> this.canMoveUpCol(i));
-            case down:
-                return IntStream.range(0, cols).anyMatch(i -> this.canMoveDownCol(i));
-            default:
-                throw new AssertionError();
+    public boolean canMove(game2048.matrix.Matrix.Vector direction) {
+        if (direction.equals(Matrix.Vector.UP)) {
+            return IntStream.range(0, cols).anyMatch(i -> this.canMoveUpCol(i));
+        } else if (direction.equals(Matrix.Vector.DOWN)) {
+            return IntStream.range(0, cols).anyMatch(i -> this.canMoveDownCol(i));
+        } else if (direction.equals(Matrix.Vector.LEFT)) {
+            return IntStream.range(0, rows).anyMatch(i -> this.canMoveLeftRow(i));
+        } else if (direction.equals(Matrix.Vector.RIGHT)) {
+            return IntStream.range(0, rows).anyMatch(i -> this.canMoveRightRow(i));
+        } else {
+            throw new AssertionError();
         }
     }
 
     @Override
-    public boolean move(Direction direction) {
-        switch (direction) {
-            case left:
-                return IntStream.range(0, rows).mapToObj(i -> this.moveLeftRow(i))
-                        .reduce(Boolean::logicalOr).get();
-            case right:
-                return IntStream.range(0, rows).mapToObj(i -> this.moveRightRow(i))
-                        .reduce(Boolean::logicalOr).get();
-            case up:
-                return IntStream.range(0, cols).mapToObj(i -> this.moveUpCol(i))
-                        .reduce(Boolean::logicalOr).get();
-            case down:
-                return IntStream.range(0, cols).mapToObj(i -> this.moveDownCol(i))
-                        .reduce(Boolean::logicalOr).get();
-            default:
-                throw new AssertionError();
+    public boolean move(Matrix.Vector direction) {
+        if (direction.equals(Matrix.Vector.UP)) {
+            return IntStream.range(0, cols).mapToObj(i -> this.moveUpCol(i))
+                    .reduce(Boolean::logicalOr).get();
+        } else if (direction.equals(Matrix.Vector.DOWN)) {
+            return IntStream.range(0, cols).mapToObj(i -> this.moveDownCol(i))
+                    .reduce(Boolean::logicalOr).get();
+        } else if (direction.equals(Matrix.Vector.LEFT)) {
+            return IntStream.range(0, rows).mapToObj(i -> this.moveLeftRow(i))
+                    .reduce(Boolean::logicalOr).get();
+        } else if (direction.equals(Matrix.Vector.RIGHT)) {
+            return IntStream.range(0, rows).mapToObj(i -> this.moveRightRow(i))
+                    .reduce(Boolean::logicalOr).get();
+        } else {
+            throw new AssertionError();
         }
     }
 

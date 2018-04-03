@@ -59,22 +59,22 @@ public class Game2048 {
     // up, down, left, right ===> move     OXI     move ===> up, down, left, right 
     // giati prepei na ginei meta apo kathe move addNewValues
     public boolean up() {
-        return this.move(Direction.up);
+        return this.move(Matrix.Vector.UP);
     }
 
     public boolean down() {
-        return this.move(Direction.down);
+        return this.move(Matrix.Vector.DOWN);
     }
 
     public boolean left() {
-        return this.move(Direction.left);
+        return this.move(Matrix.Vector.LEFT);
     }
 
     public boolean right() {
-        return this.move(Direction.right);
+        return this.move(Matrix.Vector.RIGHT);
     }
 
-    public boolean move(Direction dir) {
+    public boolean move(Matrix.Vector dir) {
         if (this.isGameOver() || !this.matrix2048.canMove(dir)) {
             return false;
         }

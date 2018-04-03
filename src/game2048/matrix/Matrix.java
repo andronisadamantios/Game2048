@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Matrix implements IMatrix {
@@ -49,6 +48,12 @@ public class Matrix implements IMatrix {
 
     public static class Vector {
 
+        public static final Vector UP = new Vector(-1, 0);
+        public static final Vector DOWN = new Vector(1, 0);
+        public static final Vector LEFT = new Vector(0, 1);
+        public static final Vector RIGHT = new Vector(0, -1);
+        public static final Vector[] DIRECTIONS = new Vector[]{UP, DOWN, LEFT, RIGHT};
+
         public static Vector get(int drow, int dcol) {
             if (drow == 0 && dcol == 0) {
                 return Vector.ZERO;
@@ -71,6 +76,14 @@ public class Matrix implements IMatrix {
 
         public int getDCol() {
             return dCol;
+        }
+
+        public boolean isVertical() {
+            return this.dRow != 0 && this.dCol == 0;
+        }
+
+        public boolean isHorizontal() {
+            return this.dRow == 0 && this.dCol != 0;
         }
 
         public Vector(int dRow, int dCol) {

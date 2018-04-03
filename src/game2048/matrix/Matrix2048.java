@@ -1,6 +1,5 @@
 package game2048.matrix;
 
-import game2048.Direction;
 import java.util.Arrays;
 
 /*
@@ -65,37 +64,37 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
 
     @Override
     public boolean canMoveUp() {
-        return this.canMove(Direction.up);
+        return this.canMove(Matrix.Vector.UP);
     }
 
     @Override
     public boolean canMoveDown() {
-        return this.canMove(Direction.down);
+        return this.canMove(Matrix.Vector.DOWN);
     }
 
     @Override
     public boolean canMoveLeft() {
-        return this.canMove(Direction.left);
+        return this.canMove(Matrix.Vector.LEFT);
     }
 
     @Override
     public boolean canMoveRight() {
-        return this.canMove(Direction.right);
+        return this.canMove(Matrix.Vector.RIGHT);
     }
 
     @Override
     public boolean moveUp() {
-        return this.move(Direction.up);
+        return this.move(Matrix.Vector.UP);
     }
 
     @Override
     public boolean moveDown() {
-        return this.move(Direction.down);
+        return this.move(Matrix.Vector.DOWN);
     }
 
     @Override
     public boolean moveLeft() {
-        return this.move(Direction.left);
+        return this.move(Matrix.Vector.LEFT);
     }
 
     /**
@@ -105,18 +104,18 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
      */
     @Override
     public boolean moveRight() {
-        return this.move(Direction.right);
+        return this.move(Matrix.Vector.RIGHT);
     }
 
     @Override
     public boolean canMove() {
-        return Arrays.stream(Direction.values()).anyMatch(this::canMove);
+        return Arrays.stream(Matrix.Vector.DIRECTIONS).anyMatch(this::canMove);
     }
 
     @Override
-    public abstract boolean canMove(Direction direction);
+    public abstract boolean canMove(game2048.matrix.Matrix.Vector direction);
 
     @Override
-    public abstract boolean move(Direction direction);
+    public abstract boolean move(Matrix.Vector direction);
 
 }
