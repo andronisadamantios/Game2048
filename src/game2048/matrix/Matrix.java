@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Matrix implements IMatrix {
@@ -27,11 +28,22 @@ public class Matrix implements IMatrix {
         }
 
         @Override
-        public String toString() {
-            return String.format("(%d, %d)", this.row , this.col);
+        public boolean equals(Object obj) {
+            return ((obj == null) || !(obj instanceof Coor) ? false : this.hashCode() == obj.hashCode());
         }
-        
-        
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 79 * hash + this.row;
+            hash = 79 * hash + this.col;
+            return hash;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("(%d, %d)", this.row, this.col);
+        }
 
     }
 
@@ -68,9 +80,8 @@ public class Matrix implements IMatrix {
 
         @Override
         public String toString() {
-            return String.format("[%d, %d]", this.dRow , this.dCol);
+            return String.format("[%d, %d]", this.dRow, this.dCol);
         }
-        
 
     }
 
@@ -259,6 +270,7 @@ public class Matrix implements IMatrix {
         }
         return list;
     }
+
     public List<Coor> getNonEmptyCoors() {
         ArrayList<Coor> list = new ArrayList<>();
         for (int i = 0; i < this.rows; i++) {

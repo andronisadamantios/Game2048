@@ -1,11 +1,8 @@
 package game2048.matrix;
 
 import game2048.Direction;
-import game2048.move.AddTile;
 import game2048.move.MoveBoard;
 import game2048.move.MoveTile;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /*
 this class extracts a whole row or column
@@ -15,9 +12,8 @@ ypologizontai h kinhsh pou prepei na kanei to kathe tile
  */
 public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
 
-    private int positivity; // {1|true, -1|false} -> {up|left, down|right}
-    private final Collection<MoveTile> tileMoves = new ArrayList<>();
-    private final Collection<AddTile> tileAdds = new ArrayList<>();
+    // private int positivity; // {1|true, -1|false} -> {up|left, down|right}
+    private MoveBoard mb;
 
     public Matrix2048_hv_1_move(int rows, int cols) {
         super(rows, cols);
@@ -25,29 +21,15 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
 
     @Override
     public MoveBoard getLastMove() {
-        return new MoveBoard() {
-            @Override
-            public Collection<MoveTile> getTileMoves() {
-                return Matrix2048_hv_1_move.this.tileMoves;
-            }
-
-            @Override
-            public Collection<AddTile> getTileAdds() {
-                return Matrix2048_hv_1_move.this.tileAdds;
-            }
-
-            @Override
-            public int getDirectionPositivity() {
-                return Matrix2048_hv_1_move.this.positivity;
-            }
-        };
+        if (mb == null) {
+            this.mb = new MoveBoard();
+        }
+        return this.mb;
     }
 
     @Override
     public boolean move(Direction direction) {
-        this.positivity = direction.getValue() ;
-        this.tileMoves.clear();
-        this.tileAdds.clear();
+        this.mb = new MoveBoard();
         return super.move(direction);
     }
 
@@ -71,7 +53,7 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
                 }
                 newArray[destIndex]++;
                 if (move) {
-                    this.tileMoves.add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex), mapInternalToRepresented(newArray[destIndex])));
+                    this.mb.getTileMoves().add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex), mapInternalToRepresented(newArray[destIndex])));
                 }
                 destIndex += p;
             } else {
@@ -81,7 +63,7 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
                 newArray[destIndex] = n;
                 if (srcIndex != destIndex) {
                     if (move) {
-                        this.tileMoves.add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex), mapInternalToRepresented(newArray[destIndex])));
+                        this.mb.getTileMoves().add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex), mapInternalToRepresented(newArray[destIndex])));
                         result = true;
                     } else {
                         return true;
