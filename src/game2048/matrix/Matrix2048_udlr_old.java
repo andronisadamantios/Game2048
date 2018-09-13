@@ -1,7 +1,8 @@
 package game2048.matrix;
 
-/*
-auto einai san to Matrix2048_hv_old alla exei 8 mathodous (2 gia kathe directions)
+/**
+ * auto einai san to Matrix2048_hv_old alla exei 8 mathodous (2 gia kathe
+ * directions)
  */
 public class Matrix2048_udlr_old extends Matrix2048_udlr {
 

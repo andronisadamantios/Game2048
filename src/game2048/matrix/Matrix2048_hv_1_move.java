@@ -1,14 +1,13 @@
 package game2048.matrix;
 
-
 import game2048.move.MoveBoard;
 import game2048.move.MoveTile;
 
-/*
-this class extracts a whole row or column
-calculates its next after a move and replaces it as a whole
-η κινηση γινεται με ενα αλγοριθμο για ολα τα direction
-ypologizontai h kinhsh pou prepei na kanei to kathe tile
+/**
+ * this class extracts a whole row or column calculates its next after a move
+ * and replaces it as a whole. η κινηση γινεται με ενα αλγοριθμο για ολα τα
+ * direction. epishs ypologizontai οι κινησεις pou prepei na κανουν to kathe
+ * tile
  */
 public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
 

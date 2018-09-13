@@ -1,10 +1,10 @@
 package game2048.matrix;
 
-/*
-base matrix for game 2048 that pushes rows and columns in 3 stpes
-1) ola ta 0 sthn arkh, 2) merge, 3) ola ta mhden pou meinane apo to 0 sthn akrh
-it has 2 algorithms: 1) ta mhden sthn akrh, 2) merge
-it has only 4 methods (2 for every orientation (hor|ver))
+/**
+ * base matrix for game 2048 that pushes rows and columns in 3 stpes 1) ola ta 0
+ * sthn arkh, 2) merge, 3) ola ta mhden pou meinane apo to merge (2) sthn akrh
+ * it has 2 algorithms: 1) ta mhden sthn akrh, 2) merge it has only 4 methods (2
+ * for every orientation (hor|ver)) dld einai dry se sxesh me to udlr
  */
 public class Matrix2048_hv_old extends Matrix2048_hv {
 
@@ -23,7 +23,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     }
 
     @Override
-    protected  boolean moveUpDownCol(int ud, int col) {
+    protected boolean moveUpDownCol(int ud, int col) {
         boolean b1 = false, b2 = false;
         b1 |= this.nonZerosToV(ud, col);
         b2 |= this.mergePairsToV(ud, col);
@@ -49,7 +49,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     otan yparxoun 2 diadoxika idia to aristera kata thn aristerh kinhsh or to deksia kata thn deksia kinhsh diplasiazetai
     kai to allo ginetai 0
      */
-    protected  boolean mergePairsToH(int lr, int row) {
+    protected boolean mergePairsToH(int lr, int row) {
         boolean result = false;
         final int start = (cols - 1) * (1 - lr) / 2;
         final int bound = (cols - 1) * (1 + lr) / 2;
@@ -68,7 +68,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     move zeros to akrh for left or right
     when left ta 0 pane right
      */
-    protected  boolean nonZerosToH(int lr, int row) {
+    protected boolean nonZerosToH(int lr, int row) {
         boolean result = false;
         final int start = (cols - 1) * (1 - lr) / 2;
         final int bound = cols - start;
@@ -96,7 +96,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     otan yparxoun 2 diadoxika idia to panw kata thn panw kinhsh or to katw kata thn katw kinhsh diplasiazetai
     kai to allo ginetai 0
      */
-    protected  boolean mergePairsToV(int ud, int col) {
+    protected boolean mergePairsToV(int ud, int col) {
         boolean result = false;
         final int start = (rows - 1) * (1 - ud) / 2;
         final int bound = (rows - 1) * (1 + ud) / 2;
@@ -115,7 +115,7 @@ public class Matrix2048_hv_old extends Matrix2048_hv {
     move zeros to akrh for up or down
     when up ta 0 pane down
      */
-    protected  boolean nonZerosToV(int ud, int col) {
+    protected boolean nonZerosToV(int ud, int col) {
         boolean result = false;
         final int start = (rows - 1) * (1 - ud) / 2;
         final int bound = rows - start;

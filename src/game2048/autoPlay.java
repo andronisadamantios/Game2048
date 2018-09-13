@@ -43,21 +43,21 @@ public class autoPlay {
                 });
     }
 
-    public static void ai1(Game2048 g) {
+    public static void autoPlay1(Game2048 g) {
         boolean b = true;
         while (b) {
             b = g.up() || g.left();
         }
     }
 
-    public static void ai2(Game2048 g) {
+    public static void autoPlay2(Game2048 g) {
         boolean b = true;
         while (b) {
             b = g.up() || g.left() || g.right() || g.down();
         }
     }
 
-    public static void ai3(Game2048 g) {
+    public static void autoPlay3(Game2048 g) {
         boolean b = true;
         while (b) {
             b = g.up() || g.left() || g.down() || g.right();

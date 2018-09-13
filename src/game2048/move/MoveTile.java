@@ -2,6 +2,11 @@ package game2048.move;
 
 import game2048.matrix.Matrix;
 
+/**
+ * η μετακίνηση μιας τιμής ενός κελιού σε ένα άλλο
+ *
+ * @author damhs
+ */
 public class MoveTile extends Move {
 
     private final Matrix.Coor start;

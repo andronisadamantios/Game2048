@@ -6,6 +6,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * ενας δυσδιάστατος πίνακας. παρέχει objects για τη μετατροπη ή την
+ * αντικατάσταση μιας στήλης ή γραμμής
+ *
+ * @author damhs
+ */
 public class Matrix implements IMatrix {
 
     public static class Coor {
@@ -98,102 +104,7 @@ public class Matrix implements IMatrix {
 
     }
 
-    public abstract class RowColumnOperator {
-
-        protected final int index;
-
-        /**
-         *
-         * @return the 0 based index of the row or column that this objects
-         * operates
-         */
-        public int getIndex() {
-            return index;
-        }
-
-        public RowColumnOperator(int index) {
-            this.index = index;
-        }
-
-        abstract int getLength();
-
-        abstract int get(int index);
-
-        abstract void set(int index, int value);
-
-        abstract Coor getCoor(int index);
-
-    }
-
-    class RowOperator extends RowColumnOperator {
-
-        public RowOperator(int index) {
-            super(index);
-        }
-
-        @Override
-        int get(int index) {
-            return Matrix.this.array[this.index][index];
-        }
-
-        @Override
-        void set(int index, int value) {
-            Matrix.this.array[this.index][index] = value;
-        }
-
-        @Override
-        int getLength() {
-            return Matrix.this.cols;
-        }
-
-        @Override
-        Coor getCoor(int index) {
-            return new Coor(this.index, index);
-        }
-
-    }
-
-    class ColumnOperator extends RowColumnOperator {
-
-        public ColumnOperator(int index) {
-            super(index);
-        }
-
-        @Override
-        int get(int index) {
-            return Matrix.this.array[index][this.index];
-        }
-
-        @Override
-        void set(int index, int value) {
-            Matrix.this.array[index][this.index] = value;
-        }
-
-        @Override
-        int getLength() {
-            return Matrix.this.rows;
-        }
-
-        @Override
-        Coor getCoor(int index) {
-            return new Coor(index, this.index);
-        }
-
-    }
-
-    public final IArrayExtractorSetter rowExtractorSetter = new IArrayExtractorSetter() {
-        @Override
-        public int[] get(int index) {
-            //return Matrix.this.array[index];
-            return Arrays.copyOf(Matrix.this.array[index], Matrix.this.cols);
-        }
-
-        @Override
-        public void set(int index, int[] newArray) {
-            Matrix.this.array[index] = newArray;
-        }
-    };
-    public final IArrayExtractorSetter colExtractorSetter = new IArrayExtractorSetter() {
+    private final IArrayExtractorSetter colExtractorSetter = new IArrayExtractorSetter() {
         @Override
         public int[] get(int index) {
             int[] newArray = new int[Matrix.this.rows];
@@ -208,6 +119,18 @@ public class Matrix implements IMatrix {
             for (int i = 0; i < Matrix.this.rows; i++) {
                 Matrix.this.array[i][index] = newArray[i];
             }
+        }
+    };
+    private final IArrayExtractorSetter rowExtractorSetter = new IArrayExtractorSetter() {
+        @Override
+        public int[] get(int index) {
+            //return Matrix.this.array[index];
+            return Arrays.copyOf(Matrix.this.array[index], Matrix.this.cols);
+        }
+
+        @Override
+        public void set(int index, int[] newArray) {
+            Matrix.this.array[index] = newArray;
         }
     };
 
@@ -234,11 +157,19 @@ public class Matrix implements IMatrix {
     }
 
     public RowColumnOperator getRowOperator(int index) {
-        return new RowOperator(index);
+        return new RowOperator(this, index);
     }
 
     public RowColumnOperator getColOperator(int index) {
-        return new ColumnOperator(index);
+        return new ColumnOperator(this, index);
+    }
+
+    public IArrayExtractorSetter GetRowExtractorSetter() {
+        return this.rowExtractorSetter;
+    }
+
+    public IArrayExtractorSetter getColExtractorSetter() {
+        return this.colExtractorSetter;
     }
 
     /**

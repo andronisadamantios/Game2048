@@ -2,6 +2,12 @@ package game2048.move;
 
 import game2048.matrix.Matrix;
 
+/**
+ * η πρόσθεση από το παιχνίδι μιας καινούριας τιμής στο πίνακα θεωρείται κίνηση
+ * (Move)
+ *
+ * @author damhs
+ */
 public class AddTile extends Move {
 
     private final Matrix.Coor coor;

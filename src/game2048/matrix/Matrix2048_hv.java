@@ -2,9 +2,9 @@ package game2048.matrix;
 
 import java.util.stream.IntStream;
 
-/*
-base matrix for game 2048
-παρεχει 2 μεθοδους για υλοποιηση για την κινηση σε καθε orientation (hor|ver)
+/**
+ * base matrix for game 2048. παρεχει 2 μεθοδους για υλοποιηση της κινησης σε
+ * καθε orientation (hor|ver). δλδ ειναι dry σε σχεση με το udlr
  */
 public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
 

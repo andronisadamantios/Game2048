@@ -1,5 +1,10 @@
 package game2048.move;
 
+/**
+ * η τιμή (ο εκθέτης) που σχετίζεται με μια κίνηση
+ *
+ * @author damhs
+ */
 public class Move {
 
     private final int value;

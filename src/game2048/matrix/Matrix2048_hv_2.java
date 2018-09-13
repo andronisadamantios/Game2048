@@ -1,10 +1,9 @@
 package game2048.matrix;
 
-/*
-this class extracts a whole row or column
-calculates its next after a move
-η κινηση γινεται με ενα αλγοριθμο για ολα τα direction
-and replaces it as a whole
+/**
+ * this class extracts a whole row or column calculates its next after a move η
+ * κινηση γινεται με ενα αλγοριθμο για ολα τα direction and replaces it as a
+ * whole
  */
 public class Matrix2048_hv_2 extends Matrix2048_hv {
 
@@ -73,19 +72,19 @@ public class Matrix2048_hv_2 extends Matrix2048_hv {
 
     @Override
     protected boolean canMoveUpDownCol(int ud, int col) {
-        return this.canMoveArray(this.colExtractorSetter.get(col), ud);
+        return this.canMoveArray(this.getColExtractorSetter().get(col), ud);
     }
 
     @Override
     protected boolean canMoveLeftRightRow(int lr, int row) {
-        return this.canMoveArray(this.rowExtractorSetter.get(row), lr);
+        return this.canMoveArray(this.GetRowExtractorSetter().get(row), lr);
     }
 
     @Override
     protected boolean moveUpDownCol(int ud, int col) {
-        int[] newArray = this.calculateArray(this.colExtractorSetter.get(col), ud);
+        int[] newArray = this.calculateArray(this.getColExtractorSetter().get(col), ud);
         if (newArray != null) {
-            this.colExtractorSetter.set(col, newArray);
+            this.getColExtractorSetter().set(col, newArray);
             return true;
         }
         return false;
@@ -93,9 +92,9 @@ public class Matrix2048_hv_2 extends Matrix2048_hv {
 
     @Override
     protected boolean moveLeftRightRow(int lr, int row) {
-        int[] newArray = this.calculateArray(this.rowExtractorSetter.get(row), lr);
+        int[] newArray = this.calculateArray(this.GetRowExtractorSetter().get(row), lr);
         if (newArray != null) {
-            this.rowExtractorSetter.set(row, newArray);
+            this.GetRowExtractorSetter().set(row, newArray);
             return true;
         }
         return false;

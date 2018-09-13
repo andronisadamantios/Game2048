@@ -2,14 +2,32 @@ package game2048;
 
 public class utils {
 
+    /**
+     * συντόμευση
+     *
+     * @param powerOf2
+     * @return
+     */
     public static int getRGB2(int powerOf2) {
         return getRGB((int) log2(powerOf2));
     }
 
+    /**
+     * συντόμευση
+     *
+     * @param powerOf2
+     * @return
+     */
     public static double log2(int powerOf2) {
         return Math.log(powerOf2) / Math.log(2);
     }
 
+    /**
+     * πως χρωματίζονται οι τιμές
+     *
+     * @param ektheths
+     * @return
+     */
     public static int getRGB(int ektheths) {
         // map [1,16] -> [0,766]
         int a = (ektheths - 1) * (766 / 15);

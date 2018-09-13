@@ -20,7 +20,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private final Timer t1 = new Timer(100, (ActionEvent e) -> {
         MainWindow.this.newGame();
-        autoPlay.ai2(MainWindow.this.g);
+        autoPlay.autoPlay2(MainWindow.this.g);
         MainWindow.this.update();
     });
     private final Timer t2 = new Timer(100, (ActionEvent e) -> {
@@ -106,7 +106,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void autoPlay() {
-        autoPlay.ai1(MainWindow.this.g);
+        autoPlay.autoPlay1(MainWindow.this.g);
         MainWindow.this.update();
     }
 
@@ -340,8 +340,12 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnUndo.setText("Undo");
+        btnUndo.setToolTipText("not implemented");
+        btnUndo.setEnabled(false);
 
         btnRedo.setText("Redo");
+        btnRedo.setToolTipText("not implemented");
+        btnRedo.setEnabled(false);
 
         lblMoves.setText("Moves: ");
 
@@ -351,6 +355,7 @@ public class MainWindow extends javax.swing.JFrame {
         lblHighestPower.setText("Highest Power: ");
 
         btnPlayTimer.setText("Play with Timer");
+        btnPlayTimer.setToolTipText("παίζει ένα ολόκληρο παιχνίδι με autoPlay κάθε tick");
         btnPlayTimer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlayTimerActionPerformed(evt);
@@ -358,6 +363,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnAutoPlay.setText("Auto Play");
+        btnAutoPlay.setToolTipText("plays UP or LEFT μέχρι να μη μπορεί άλλο");
         btnAutoPlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAutoPlayActionPerformed(evt);
@@ -421,7 +427,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlDetailsBtns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -431,7 +437,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlDetailsBtns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 

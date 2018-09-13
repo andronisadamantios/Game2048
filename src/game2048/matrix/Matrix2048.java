@@ -2,9 +2,10 @@ package game2048.matrix;
 
 import java.util.Arrays;
 
-/*
-internal values are in this case the exponents of 2
-represented values are the power of 2 to the internal value
+/**
+ * subClass of Matrix2048 εξειδικευμενο για το παιχνιδι Game2048. notes:
+ * internal values are in this case the exponents of 2. represented values are
+ * the power of 2 to the internal value
  */
 public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
 

@@ -2,12 +2,11 @@ package game2048.matrix;
 
 import java.util.stream.IntStream;
 
-/*
-base matrix boolean result = false; for game 2048
-παρεχει 4 μεθοδους για υλοποιηση για την κινηση σε καθε direction (up|down|left|right)
-matrix boolean result = false; for game 2048 that pushes rows and columns in 3 stpes
-has 8 methods (2 boolean result = false; for every direction (up|down|left|right))
-idio me to dry alla might be faster
+/**
+ * base matrix for game 2048. παρεχει 4 μεθοδους για υλοποιηση της κινησης σε
+ * καθε direction (up|down|left|right) it pushes rows and columns in 3 steps has
+ * 8 methods (2 for every direction (up|down|left|right)) idio me to dry alla
+ * might be faster
  */
 public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 {
 

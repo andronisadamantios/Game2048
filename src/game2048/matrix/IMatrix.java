@@ -1,5 +1,10 @@
 package game2048.matrix;
 
+/**
+ * interface for Matrix
+ *
+ * @author damhs
+ */
 public interface IMatrix {
 
     int getRows();
