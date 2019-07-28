@@ -5,7 +5,7 @@ package game2048.move;
  *
  * @author damhs
  */
-public class Move {
+public abstract class Move {
 
     private final int value;
 
@@ -16,6 +16,8 @@ public class Move {
     public Move(int value) {
         this.value = value;
     }
+
+    public abstract void run();
 
     @Override
     public String toString() {

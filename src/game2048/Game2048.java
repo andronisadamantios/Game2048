@@ -1,7 +1,7 @@
 package game2048;
 
 import game2048.matrix.IMatrix2048;
-import game2048.matrix.Matrix;
+import matrix.Matrix;
 import static game2048.matrix.Matrix2048.mapInternalToRepresented;
 import game2048.matrix.Matrix2048_hv_1_move;
 import game2048.move.AddTile;
@@ -56,7 +56,7 @@ public class Game2048 {
         this.reset();
     }
 
-    // up, down, left, right ===> move     OXI     move ===> up, down, left, right 
+    // up, down, left, right ===> move     OXI     move ===> up, down, left, right
     // giati prepei na ginei meta apo kathe move addNewValues
     public boolean up() {
         return this.move(Matrix.Vector.UP);
@@ -78,7 +78,7 @@ public class Game2048 {
         if (this.isGameOver() || !this.matrix2048.canMove(dir)) {
             return false;
         }
-        this.getMatrix().getLastMove().getTileAdds().clear();
+        this.getMatrix().getLastMove().clearTileAds();
         if (this.matrix2048.move(dir)) {
             this.moves++;
             // an den mporei na mpei kainourio value den peirazei
@@ -105,7 +105,7 @@ public class Game2048 {
             Matrix.Coor c = emptyCoors.get((int) (Math.random() * emptyCoors.size()));
             int newValue = rg.get();
             this.matrix2048.set(c.getRow(), c.getCol(), newValue);
-            this.matrix2048.getLastMove().getTileAdds().add(new AddTile(c, mapInternalToRepresented(newValue)));
+            this.matrix2048.getLastMove().addTileAdd(c, mapInternalToRepresented(newValue));
             return true;
         }
         return false;

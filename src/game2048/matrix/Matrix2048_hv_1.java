@@ -1,5 +1,7 @@
 package game2048.matrix;
 
+import matrix.RowColumnOperator;
+
 /**
  * this class uses a column/row operator to edit the elements. η κινηση γινεται
  * με ενα αλγοριθμο για ολα τα direction

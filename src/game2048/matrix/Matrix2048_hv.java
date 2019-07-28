@@ -1,5 +1,6 @@
 package game2048.matrix;
 
+import matrix.Matrix;
 import java.util.stream.IntStream;
 
 /**

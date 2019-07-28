@@ -1,5 +1,7 @@
 package game2048.matrix;
 
+import matrix.RowColumnOperator;
+import matrix.Matrix;
 import game2048.move.MoveBoard;
 import game2048.move.MoveTile;
 
@@ -52,7 +54,7 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
                 }
                 newArray[destIndex]++;
                 if (move) {
-                    this.mb.getTileMoves().add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex), mapInternalToRepresented(newArray[destIndex])));
+                    this.mb.addTileMove(rco.getCoorOf(srcIndex), rco.getCoorOf(destIndex), mapInternalToRepresented(newArray[destIndex]));
                 }
                 destIndex += p;
             } else {
@@ -62,7 +64,7 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
                 newArray[destIndex] = n;
                 if (srcIndex != destIndex) {
                     if (move) {
-                        this.mb.getTileMoves().add(new MoveTile(rco.getCoor(srcIndex), rco.getCoor(destIndex), mapInternalToRepresented(newArray[destIndex])));
+                        this.mb.addTileMove(rco.getCoorOf(srcIndex), rco.getCoorOf(destIndex), mapInternalToRepresented(newArray[destIndex]));
                         result = true;
                     } else {
                         return true;

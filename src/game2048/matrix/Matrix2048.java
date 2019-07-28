@@ -1,5 +1,6 @@
 package game2048.matrix;
 
+import matrix.Matrix;
 import java.util.Arrays;
 
 /**
@@ -114,7 +115,7 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
     }
 
     @Override
-    public abstract boolean canMove(game2048.matrix.Matrix.Vector direction);
+    public abstract boolean canMove(matrix.Matrix.Vector direction);
 
     @Override
     public abstract boolean move(Matrix.Vector direction);

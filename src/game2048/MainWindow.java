@@ -1,6 +1,6 @@
 package game2048;
 
-import game2048.matrix.Matrix;
+import matrix.Matrix;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;

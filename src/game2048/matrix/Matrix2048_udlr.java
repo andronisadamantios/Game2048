@@ -1,5 +1,6 @@
 package game2048.matrix;
 
+import matrix.Matrix;
 import java.util.stream.IntStream;
 
 /**
@@ -15,7 +16,7 @@ public abstract class Matrix2048_udlr extends Matrix2048 implements IMatrix2048 
     }
 
     @Override
-    public boolean canMove(game2048.matrix.Matrix.Vector direction) {
+    public boolean canMove(matrix.Matrix.Vector direction) {
         if (direction.equals(Matrix.Vector.UP)) {
             return IntStream.range(0, cols).anyMatch(i -> this.canMoveUpCol(i));
         } else if (direction.equals(Matrix.Vector.DOWN)) {

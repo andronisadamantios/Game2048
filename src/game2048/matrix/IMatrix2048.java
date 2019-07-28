@@ -1,5 +1,7 @@
 package game2048.matrix;
 
+import matrix.IMatrix;
+import matrix.Matrix;
 import game2048.move.MoveBoard;
 
 /**
@@ -61,7 +63,7 @@ public interface IMatrix2048 extends IMatrix {
 
     boolean canMove();
 
-    boolean canMove(game2048.matrix.Matrix.Vector direction);
+    boolean canMove(matrix.Matrix.Vector direction);
 
     boolean move(Matrix.Vector direction);
 

@@ -1,6 +1,6 @@
 package game2048.move;
 
-import game2048.matrix.Matrix;
+import matrix.Matrix;
 
 /**
  * η πρόσθεση από το παιχνίδι μιας καινούριας τιμής στο πίνακα θεωρείται κίνηση
@@ -28,6 +28,11 @@ public class AddTile extends Move {
     @Override
     public String toString() {
         return String.format("%s : %s", this.coor, super.toString());
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -1,6 +1,6 @@
 package game2048.move;
 
-import game2048.matrix.Matrix;
+import matrix.Matrix;
 
 /**
  * η μετακίνηση μιας τιμής ενός κελιού σε ένα άλλο
@@ -33,6 +33,11 @@ public class MoveTile extends Move {
     @Override
     public String toString() {
         return String.format("%s -> %s : %s", this.start, this.end, super.toString());
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
