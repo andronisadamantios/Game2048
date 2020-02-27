@@ -8,16 +8,6 @@ public class utils {
      * @param powerOf2
      * @return
      */
-    public static int getRGB2(int powerOf2) {
-        return getRGB((int) log2(powerOf2));
-    }
-
-    /**
-     * συντόμευση
-     *
-     * @param powerOf2
-     * @return
-     */
     public static double log2(int powerOf2) {
         return Math.log(powerOf2) / Math.log(2);
     }
@@ -28,7 +18,7 @@ public class utils {
      * @param ektheths
      * @return
      */
-    public static int getRGB(int ektheths) {
+    public static int getColorForValue(int ektheths) {
         // map [1,16] -> [0,766]
         int a = (ektheths - 1) * (766 / 15);
         int r;
