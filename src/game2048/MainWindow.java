@@ -3,50 +3,27 @@ package game2048;
 import matrix.Matrix;
 import java.awt.Color;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 
 public class MainWindow extends javax.swing.JFrame {
 
-    private static final int LEFT_ARROW = 37;
-    private static final int UP_ARROW = 38;
-    private static final int RIGHT_ARROW = 39;
-    private static final int DOWN_ARROW = 40;
+    private static final Color COLOR_EMPTY = new Color(255, 255, 255);
 
-    private final Timer t1 = new Timer(100, (ActionEvent e) -> {
-        MainWindow.this.newGame();
-        autoPlay.autoPlay2(MainWindow.this.g);
-        MainWindow.this.update();
-    });
-    private final Timer t2 = new Timer(100, (ActionEvent e) -> {
-        if (!MainWindow.this.g.up()) {
-            if (!MainWindow.this.g.left()) {
-                MainWindow.this.t2.stop();
-            }
-        }
-        MainWindow.this.update();
-    });
-
-    private final Timer t = t1;
-    private static final Color EMPTY = new Color(255, 255, 255);
-    private final Map<Integer, Color> m = new HashMap<>();
-
-    private Game2048 g;
+    private Game2048 game;
+    private final Map<Integer, Color> mapValuesColors = new HashMap<>();
 
     public MainWindow() {
-        initComponents();
-        m.put(0, EMPTY);
+        this.initComponents();
+        mapValuesColors.put(0, COLOR_EMPTY);
         this.newGame();
-
     }
 
     private void newGame() {
-        this.g = new Game2048();
+        this.game = new Game2048();
         this.update();
     }
 
@@ -54,16 +31,16 @@ public class MainWindow extends javax.swing.JFrame {
         if (this.checkFinished()) {
             return;
         }
-        if (this.g.move(dir)) {
+        if (this.game.move(dir)) {
             this.update();
             this.checkFinished();
         }
     }
 
     private boolean checkFinished() throws HeadlessException {
-        if (this.g.isFinished()) {
-            if (this.g.isGameOver()) {
-                JOptionPane.showMessageDialog(this, "game over", "game finished", JOptionPane.PLAIN_MESSAGE);
+        if (this.game.isFinished()) {
+            if (this.game.isGameOver()) {
+                JOptionPane.showMessageDialog(this, "game over", "game over. no possible moves", JOptionPane.PLAIN_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "game won", "game won. reached 2048", JOptionPane.PLAIN_MESSAGE);
             }
@@ -73,11 +50,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void update() {
-        int[][] allValues = this.g.getMatrix().getAllRepresentedValues();
+        int[][] allValues = this.game.getMatrix().getAllRepresentedValues();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 int value = allValues[i][j];
-                Color color = EMPTY;
+                Color color = COLOR_EMPTY;
                 if (value != 0) {
                     double power = utils.log2(value);
                     assert power == Math.floor(power);
@@ -89,41 +66,23 @@ public class MainWindow extends javax.swing.JFrame {
                 lbl.setBackground(color);
             }
         }
-        this.lblMoves.setText(String.format("moves: %d", this.g.getMoves()));
+        this.lblMoves.setText(String.format("moves: %d", this.game.getMoves()));
         this.pnlGame.grabFocus();
     }
 
-    private void ToggleTimerPlay() {
-        ToggleTimerPlay(t);
-    }
-
-    private void ToggleTimerPlay(Timer t) {
-        if (t.isRunning()) {
-            t.stop();
-        } else {
-            t.start();
-        }
-    }
-
-    private void autoPlay() {
-        autoPlay.autoPlay1(MainWindow.this.g);
-        MainWindow.this.update();
-    }
-
     private Color getColorFor(int value) {
-        if (m.containsKey(value)) {
-            return m.get(value);
+        if (mapValuesColors.containsKey(value)) {
+            return mapValuesColors.get(value);
         }
 
         Color c = new Color(utils.getColorForValue(value));
-        m.put(value, c);
+        mapValuesColors.put(value, c);
         return c;
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pnlGame = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -143,17 +102,9 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         pnlDetails = new javax.swing.JPanel();
-        lblHighestPower = new javax.swing.JLabel();
         lblMoves = new javax.swing.JLabel();
         toolBarButtons = new javax.swing.JToolBar();
-        btnUndo = new javax.swing.JButton();
-        btnRedo = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
         btnNewGame = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
-        btnAutoPlay = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        btnPlayTimer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -353,9 +304,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlDetails.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblHighestPower.setBackground(new java.awt.Color(255, 255, 255));
-        lblHighestPower.setText("Highest Power: ");
-
         lblMoves.setBackground(new java.awt.Color(255, 255, 255));
         lblMoves.setText("Moves: ");
 
@@ -365,31 +313,15 @@ public class MainWindow extends javax.swing.JFrame {
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addComponent(lblMoves)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblHighestPower))
+                .addGap(122, 122, 122))
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblMoves)
-                .addComponent(lblHighestPower))
+            .addComponent(lblMoves)
         );
 
         toolBarButtons.setBackground(new java.awt.Color(255, 255, 255));
         toolBarButtons.setRollover(true);
-
-        btnUndo.setBackground(new java.awt.Color(255, 255, 255));
-        btnUndo.setText("Undo");
-        btnUndo.setToolTipText("not implemented");
-        btnUndo.setEnabled(false);
-        toolBarButtons.add(btnUndo);
-
-        btnRedo.setBackground(new java.awt.Color(255, 255, 255));
-        btnRedo.setText("Redo");
-        btnRedo.setToolTipText("not implemented");
-        btnRedo.setEnabled(false);
-        toolBarButtons.add(btnRedo);
-        toolBarButtons.add(jSeparator1);
 
         btnNewGame.setBackground(new java.awt.Color(255, 255, 255));
         btnNewGame.setText("New Game");
@@ -402,33 +334,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         toolBarButtons.add(btnNewGame);
-        toolBarButtons.add(jSeparator3);
-
-        btnAutoPlay.setBackground(new java.awt.Color(255, 255, 255));
-        btnAutoPlay.setText("Auto Play");
-        btnAutoPlay.setToolTipText("plays UP or LEFT μέχρι να μη μπορεί άλλο");
-        btnAutoPlay.setFocusable(false);
-        btnAutoPlay.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAutoPlay.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAutoPlay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAutoPlayActionPerformed(evt);
-            }
-        });
-        toolBarButtons.add(btnAutoPlay);
-        toolBarButtons.add(jSeparator2);
-
-        btnPlayTimer.setBackground(new java.awt.Color(255, 255, 255));
-        btnPlayTimer.setText("Play with Timer");
-        btnPlayTimer.setToolTipText("παίζει ένα ολόκληρο παιχνίδι με autoPlay κάθε tick");
-        btnPlayTimer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnPlayTimer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnPlayTimer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlayTimerActionPerformed(evt);
-            }
-        });
-        toolBarButtons.add(btnPlayTimer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -459,21 +364,18 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeyPressed
         switch (evt.getKeyCode()) {
-            case LEFT_ARROW:
+            case 37: // left arrow
                 this.play(Matrix.Vector.LEFT);
                 break;
-            case UP_ARROW:
+            case 38: // up arrow
                 this.play(Matrix.Vector.UP);
                 break;
-            case RIGHT_ARROW:
+            case 39: // right arrow
                 this.play(Matrix.Vector.RIGHT);
                 break;
-            case DOWN_ARROW:
+            case 40: // down arrow
                 this.play(Matrix.Vector.DOWN);
                 break;
-            case 65:
-            case 97:
-                this.autoPlay();
             default:
         }
     }//GEN-LAST:event_KeyPressed
@@ -482,16 +384,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.newGame();
     }//GEN-LAST:event_btnNewGameActionPerformed
 
-    private void btnPlayTimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayTimerActionPerformed
-        ToggleTimerPlay();
-    }//GEN-LAST:event_btnPlayTimerActionPerformed
-
-    private void btnAutoPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoPlayActionPerformed
-        autoPlay();
-    }//GEN-LAST:event_btnAutoPlayActionPerformed
-
     public static void main(String args[]) {
-
         try {
             javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
@@ -503,11 +396,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAutoPlay;
     private javax.swing.JButton btnNewGame;
-    private javax.swing.JButton btnPlayTimer;
-    private javax.swing.JButton btnRedo;
-    private javax.swing.JButton btnUndo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -524,10 +413,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JToolBar.Separator jSeparator3;
-    private javax.swing.JLabel lblHighestPower;
     private javax.swing.JLabel lblMoves;
     private javax.swing.JPanel pnlDetails;
     private javax.swing.JPanel pnlGame;

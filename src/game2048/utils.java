@@ -45,4 +45,11 @@ public class utils {
         return (255 << 24) | (r << 16) | (g << 8) | b;
     }
 
+    private static int i = 0;
+
+    public static void debugHelp(String msg) {
+        i++;
+        System.out.println(i + ") " + msg);
+    }
+
 }
