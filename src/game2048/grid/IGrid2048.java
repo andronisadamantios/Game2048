@@ -1,28 +1,29 @@
-package game2048.matrix;
+package game2048.grid;
 
-import matrix.IMatrix;
-import matrix.Matrix;
+import grid.Grid;
 import game2048.move.MoveBoard;
+import grid.GridVector;
+import grid.IGrid;
 
 /**
  * interface for matrix of game 2048 yparxoun 4 kinhseis
  */
-public interface IMatrix2048 extends IMatrix {
+public interface IGrid2048 extends IGrid {
 
     default boolean canMoveUp() {
-        return this.canMove(Matrix.Vector.UP);
+        return this.canMove(GridVector.UP);
     }
 
     default boolean canMoveDown() {
-        return this.canMove(Matrix.Vector.DOWN);
+        return this.canMove(GridVector.DOWN);
     }
 
     default boolean canMoveLeft() {
-        return this.canMove(Matrix.Vector.LEFT);
+        return this.canMove(GridVector.LEFT);
     }
 
     default boolean canMoveRight() {
-        return this.canMove(Matrix.Vector.RIGHT);
+        return this.canMove(GridVector.RIGHT);
     }
 
     /**
@@ -31,7 +32,7 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveUp() {
-        return this.move(Matrix.Vector.UP);
+        return this.move(GridVector.UP);
     }
 
     /**
@@ -40,7 +41,7 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveDown() {
-        return this.move(Matrix.Vector.DOWN);
+        return this.move(GridVector.DOWN);
     }
 
     /**
@@ -49,7 +50,7 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveLeft() {
-        return this.move(Matrix.Vector.LEFT);
+        return this.move(GridVector.LEFT);
     }
 
     /**
@@ -58,14 +59,14 @@ public interface IMatrix2048 extends IMatrix {
      * @return true αν εγινε κινηση
      */
     default boolean moveRight() {
-        return this.move(Matrix.Vector.RIGHT);
+        return this.move(GridVector.RIGHT);
     }
 
     boolean canMove();
 
-    boolean canMove(matrix.Matrix.Vector direction);
+    boolean canMove(GridVector direction);
 
-    boolean move(Matrix.Vector direction);
+    boolean move(GridVector direction);
 
     /**
      *

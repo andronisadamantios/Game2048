@@ -1,12 +1,14 @@
 package game2048;
 
-import game2048.matrix.IMatrix2048;
-import matrix.Matrix;
-import static game2048.matrix.Matrix2048.mapInternalToRepresented;
-import game2048.matrix.Matrix2048_hv_1_move;
+import grid.Grid;
+import static game2048.grid.Grid2048.mapInternalToRepresented;
+import game2048.grid.Grid2048_hv_1_move;
 import game2048.move.AddTile;
 import java.util.List;
 import java.util.function.Supplier;
+import grid.GridVector;
+import grid.IGridCoordinates;
+import game2048.grid.IGrid2048;
 
 public class Game2048 {
 
@@ -19,12 +21,12 @@ public class Game2048 {
 
     public static final Supplier<Integer> rg = () -> (int) (Math.random() < 0.9 ? 1 : 2);
 
-    private IMatrix2048 matrix2048;
+    private IGrid2048 matrix2048;
     private int score;
     private int moves;
     private Result result;
 
-    public IMatrix2048 getMatrix() {
+    public IGrid2048 getGrid() {
         return this.matrix2048;
     }
 
@@ -59,26 +61,26 @@ public class Game2048 {
     // up, down, left, right ===> move     OXI     move ===> up, down, left, right
     // giati prepei na ginei meta apo kathe move addNewValues
     public boolean up() {
-        return this.move(Matrix.Vector.UP);
+        return this.move(GridVector.UP);
     }
 
     public boolean down() {
-        return this.move(Matrix.Vector.DOWN);
+        return this.move(GridVector.DOWN);
     }
 
     public boolean left() {
-        return this.move(Matrix.Vector.LEFT);
+        return this.move(GridVector.LEFT);
     }
 
     public boolean right() {
-        return this.move(Matrix.Vector.RIGHT);
+        return this.move(GridVector.RIGHT);
     }
 
-    public boolean move(Matrix.Vector dir) {
+    public boolean move(GridVector dir) {
         if (this.isGameOver() || !this.matrix2048.canMove(dir)) {
             return false;
         }
-        this.getMatrix().getLastMove().clearTileAds();
+        this.getGrid().getLastMove().clearTileAds();
         if (this.matrix2048.move(dir)) {
             this.moves++;
             // an den mporei na mpei kainourio value den peirazei
@@ -100,9 +102,9 @@ public class Game2048 {
     }
 
     private boolean addNewValue() {
-        List<Matrix.Coor> emptyCoors = ((Matrix) this.matrix2048).getEmptyCoors();
+        List<IGridCoordinates> emptyCoors = ((Grid) this.matrix2048).getEmptyCoors();
         if (!emptyCoors.isEmpty()) {
-            Matrix.Coor c = emptyCoors.get((int) (Math.random() * emptyCoors.size()));
+            IGridCoordinates c = emptyCoors.get((int) (Math.random() * emptyCoors.size()));
             int newValue = rg.get();
             this.matrix2048.set(c.getRow(), c.getCol(), newValue);
             this.matrix2048.getLastMove().addTileAdd(c, mapInternalToRepresented(newValue));
@@ -115,7 +117,7 @@ public class Game2048 {
         this.score = 0;
         this.moves = 0;
         this.result = null;
-        this.matrix2048 = new Matrix2048_hv_1_move(ROWS, COLS);
+        this.matrix2048 = new Grid2048_hv_1_move(ROWS, COLS);
         this.addNewValue();
         this.addNewValue();
         this.calculateResult();

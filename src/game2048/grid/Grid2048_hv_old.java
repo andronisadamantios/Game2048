@@ -1,4 +1,4 @@
-package game2048.matrix;
+package game2048.grid;
 
 /**
  * base matrix for game 2048 that pushes rows and columns in 3 stpes 1) ola ta 0
@@ -6,9 +6,9 @@ package game2048.matrix;
  * it has 2 algorithms: 1) ta mhden sthn akrh, 2) merge it has only 4 methods (2
  * for every orientation (hor|ver)) dld einai dry se sxesh me to udlr
  */
-public class Matrix2048_hv_old extends Matrix2048_hv {
+public class Grid2048_hv_old extends Grid2048_hv {
 
-    public Matrix2048_hv_old(int rows, int cols) {
+    public Grid2048_hv_old(int rows, int cols) {
         super(rows, cols);
     }
 

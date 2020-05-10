@@ -1,6 +1,5 @@
 package game2048;
 
-import matrix.Matrix;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.HashMap;
@@ -8,6 +7,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import grid.GridVector;
 
 public class MainWindow extends javax.swing.JFrame {
 
@@ -27,7 +27,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.update();
     }
 
-    private void play(Matrix.Vector dir) {
+    private void play(GridVector dir) {
         if (this.checkFinished()) {
             return;
         }
@@ -50,7 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void update() {
-        int[][] allValues = this.game.getMatrix().getAllRepresentedValues();
+        int[][] allValues = this.game.getGrid().getAllRepresentedValues();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 int value = allValues[i][j];
@@ -365,16 +365,16 @@ public class MainWindow extends javax.swing.JFrame {
     private void KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeyPressed
         switch (evt.getKeyCode()) {
             case 37: // left arrow
-                this.play(Matrix.Vector.LEFT);
+                this.play(GridVector.LEFT);
                 break;
             case 38: // up arrow
-                this.play(Matrix.Vector.UP);
+                this.play(GridVector.UP);
                 break;
             case 39: // right arrow
-                this.play(Matrix.Vector.RIGHT);
+                this.play(GridVector.RIGHT);
                 break;
             case 40: // down arrow
-                this.play(Matrix.Vector.DOWN);
+                this.play(GridVector.DOWN);
                 break;
             default:
         }

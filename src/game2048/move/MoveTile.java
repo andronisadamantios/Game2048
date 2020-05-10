@@ -1,6 +1,8 @@
 package game2048.move;
 
-import matrix.Matrix;
+import grid.Grid;
+import grid.GridVector;
+import grid.IGridCoordinates;
 
 /**
  * η μετακίνηση μιας τιμής ενός κελιού σε ένα άλλο
@@ -9,25 +11,25 @@ import matrix.Matrix;
  */
 public class MoveTile extends Move {
 
-    private final Matrix.Coor start;
-    private final Matrix.Coor end;
+    private final IGridCoordinates start;
+    private final IGridCoordinates end;
 
-    public Matrix.Coor getStart() {
+    public IGridCoordinates getStart() {
         return start;
     }
 
-    public Matrix.Coor getEnd() {
+    public IGridCoordinates getEnd() {
         return end;
     }
 
-    public MoveTile(Matrix.Coor start, Matrix.Coor end, int value) {
+    public MoveTile(IGridCoordinates start, IGridCoordinates end, int value) {
         super(value);
         this.start = start;
         this.end = end;
     }
 
-    public Matrix.Vector getVector() {
-        return Matrix.Vector.getFromTo(start, end);
+    public GridVector getVector() {
+        return GridVector.getFromTo(start, end);
     }
 
     @Override

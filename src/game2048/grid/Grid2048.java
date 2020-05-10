@@ -1,20 +1,21 @@
-package game2048.matrix;
+package game2048.grid;
 
-import matrix.Matrix;
+import grid.Grid;
+import grid.GridVector;
 import java.util.Arrays;
 
 /**
- * subClass of Matrix2048 εξειδικευμενο για το παιχνιδι Game2048. notes:
+ * subClass of Grid2048 εξειδικευμενο για το παιχνιδι Game2048. notes:
  * internal values are in this case the exponents of 2. represented values are
  * the power of 2 to the internal value
  */
-public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
+public abstract class Grid2048 extends Grid implements IGrid2048 {
 
     public static int mapInternalToRepresented(int value) {
         return (int) Math.pow(2, value);
     }
 
-    public Matrix2048(int rows, int cols) {
+    public Grid2048(int rows, int cols) {
         super(rows, cols);
     }
 
@@ -66,37 +67,37 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
 
     @Override
     public boolean canMoveUp() {
-        return this.canMove(Matrix.Vector.UP);
+        return this.canMove(GridVector.UP);
     }
 
     @Override
     public boolean canMoveDown() {
-        return this.canMove(Matrix.Vector.DOWN);
+        return this.canMove(GridVector.DOWN);
     }
 
     @Override
     public boolean canMoveLeft() {
-        return this.canMove(Matrix.Vector.LEFT);
+        return this.canMove(GridVector.LEFT);
     }
 
     @Override
     public boolean canMoveRight() {
-        return this.canMove(Matrix.Vector.RIGHT);
+        return this.canMove(GridVector.RIGHT);
     }
 
     @Override
     public boolean moveUp() {
-        return this.move(Matrix.Vector.UP);
+        return this.move(GridVector.UP);
     }
 
     @Override
     public boolean moveDown() {
-        return this.move(Matrix.Vector.DOWN);
+        return this.move(GridVector.DOWN);
     }
 
     @Override
     public boolean moveLeft() {
-        return this.move(Matrix.Vector.LEFT);
+        return this.move(GridVector.LEFT);
     }
 
     /**
@@ -106,18 +107,18 @@ public abstract class Matrix2048 extends Matrix implements IMatrix2048 {
      */
     @Override
     public boolean moveRight() {
-        return this.move(Matrix.Vector.RIGHT);
+        return this.move(GridVector.RIGHT);
     }
 
     @Override
     public boolean canMove() {
-        return Arrays.stream(Matrix.Vector.DIRECTIONS).anyMatch(this::canMove);
+        return Arrays.stream(GridVector.DIRECTIONS).anyMatch(this::canMove);
     }
 
     @Override
-    public abstract boolean canMove(matrix.Matrix.Vector direction);
+    public abstract boolean canMove(grid.GridVector direction);
 
     @Override
-    public abstract boolean move(Matrix.Vector direction);
+    public abstract boolean move(GridVector direction);
 
 }

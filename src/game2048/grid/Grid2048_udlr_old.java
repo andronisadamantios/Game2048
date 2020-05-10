@@ -1,12 +1,12 @@
-package game2048.matrix;
+package game2048.grid;
 
 /**
- * auto einai san to Matrix2048_hv_old alla exei 8 mathodous (2 gia kathe
+ * auto einai san to Grid2048_hv_old alla exei 8 mathodous (2 gia kathe
  * directions)
  */
-public class Matrix2048_udlr_old extends Matrix2048_udlr {
+public class Grid2048_udlr_old extends Grid2048_udlr {
 
-    public Matrix2048_udlr_old(int rows, int cols) {
+    public Grid2048_udlr_old(int rows, int cols) {
         super(rows, cols);
     }
 

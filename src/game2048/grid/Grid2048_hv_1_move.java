@@ -1,9 +1,10 @@
-package game2048.matrix;
+package game2048.grid;
 
-import matrix.RowColumnOperator;
-import matrix.Matrix;
+import grid.RowColumnOperator;
+import grid.Grid;
 import game2048.move.MoveBoard;
 import game2048.move.MoveTile;
+import grid.GridVector;
 
 /**
  * this class extracts a whole row or column calculates its next after a move
@@ -11,12 +12,12 @@ import game2048.move.MoveTile;
  * direction. epishs ypologizontai οι κινησεις pou prepei na κανουν to kathe
  * tile
  */
-public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
+public class Grid2048_hv_1_move extends Grid2048_hv_1 {
 
     // private int positivity; // {1|true, -1|false} -> {up|left, down|right}
     private MoveBoard mb;
 
-    public Matrix2048_hv_1_move(int rows, int cols) {
+    public Grid2048_hv_1_move(int rows, int cols) {
         super(rows, cols);
     }
 
@@ -29,7 +30,7 @@ public class Matrix2048_hv_1_move extends Matrix2048_hv_1 {
     }
 
     @Override
-    public boolean move(Matrix.Vector direction) {
+    public boolean move(GridVector direction) {
         this.mb = new MoveBoard();
         return super.move(direction);
     }

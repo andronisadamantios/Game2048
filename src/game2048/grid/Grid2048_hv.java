@@ -1,20 +1,21 @@
-package game2048.matrix;
+package game2048.grid;
 
-import matrix.Matrix;
+import grid.Grid;
+import grid.GridVector;
 import java.util.stream.IntStream;
 
 /**
  * base matrix for game 2048. παρεχει 2 μεθοδους για υλοποιηση της κινησης σε
  * καθε orientation (hor|ver). δλδ ειναι dry σε σχεση με το udlr
  */
-public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
+public abstract class Grid2048_hv extends Grid2048 implements IGrid2048 {
 
-    public Matrix2048_hv(int rows, int cols) {
+    public Grid2048_hv(int rows, int cols) {
         super(rows, cols);
     }
 
     @Override
-    public boolean canMove(Matrix.Vector direction) {
+    public boolean canMove(GridVector direction) {
         int value = direction.getDCol() + direction.getDRow();
         if (direction.isVertical()) {
             value = -value;
@@ -27,7 +28,7 @@ public abstract class Matrix2048_hv extends Matrix2048 implements IMatrix2048 {
     }
 
     @Override
-    public boolean move(Matrix.Vector direction) {
+    public boolean move(GridVector direction) {
         int value = direction.getDCol() + direction.getDRow();
         if (direction.isVertical()) {
             value = -value;

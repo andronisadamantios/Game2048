@@ -1,14 +1,14 @@
-package game2048.matrix;
+package game2048.grid;
 
-import matrix.RowColumnOperator;
+import grid.RowColumnOperator;
 
 /**
  * this class uses a column/row operator to edit the elements. η κινηση γινεται
  * με ενα αλγοριθμο για ολα τα direction
  */
-public class Matrix2048_hv_1 extends Matrix2048_hv implements IMatrix2048 {
+public class Grid2048_hv_1 extends Grid2048_hv implements IGrid2048 {
 
-    public Matrix2048_hv_1(int rows, int cols) {
+    public Grid2048_hv_1(int rows, int cols) {
         super(rows, cols);
     }
 

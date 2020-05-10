@@ -1,6 +1,8 @@
 package game2048.move;
 
-import matrix.Matrix;
+import grid.Grid;
+import grid.GridVector;
+import grid.IGridCoordinates;
 
 /**
  * η πρόσθεση από το παιχνίδι μιας καινούριας τιμής στο πίνακα θεωρείται κίνηση
@@ -10,19 +12,19 @@ import matrix.Matrix;
  */
 public class AddTile extends Move {
 
-    private final Matrix.Coor coor;
+    private final IGridCoordinates coor;
 
-    public Matrix.Coor getCoor() {
+    public IGridCoordinates getCoor() {
         return coor;
     }
 
-    public AddTile(Matrix.Coor coor, int value) {
+    public AddTile(IGridCoordinates coor, int value) {
         super(value);
         this.coor = coor;
     }
 
-    public Matrix.Vector getVector() {
-        return Matrix.Vector.ZERO;
+    public GridVector getVector() {
+        return GridVector.ZERO;
     }
 
     @Override

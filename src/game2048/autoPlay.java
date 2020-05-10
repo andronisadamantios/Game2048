@@ -35,7 +35,7 @@ public class autoPlay {
         System.out.println("rate: " + (((double) fores) / ((double) d.toMillis())) + " games/ms");
         System.out.println("");
         System.out.println(m.size() + " diaforetika results");
-        System.out.println("max result: " + m.keySet().stream().max(Comparator.naturalOrder()).get().intValue());
+        System.out.println("max result: " + m.keySet().stream().max(Comparator.naturalOrder()).get());
         System.out.println("map:");
         m.entrySet().stream().sorted((o1, o2) -> o1.getKey().compareTo(o2.getKey()))
                 .forEach(e -> {
